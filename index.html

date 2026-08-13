@@ -240,12 +240,12 @@
       </div>
     </div>
 
-    <!-- Step 2: المعرض والمراحل -->
+    <!-- Step 2: قصة الاعتراف والصور والأغاني -->
     <div class="step" id="step-2">
       <h2 class="title-glow" style="font-size: 1.8rem;">13 أغسطس 2024 - 1:55 AM 💕</h2>
       <p class="subtitle">لحظة الاعتراف الشجاعة التي غيّرت حياتي للأبد</p>
 
-      <!-- العداد الحقيقي -->
+      <!-- العداد التصاعدي المباشر -->
       <div class="counter-grid">
         <div class="counter-item"><div class="counter-value" id="days">0</div><div class="counter-label">يوم</div></div>
         <div class="counter-item"><div class="counter-value" id="hours">0</div><div class="counter-label">ساعة</div></div>
@@ -262,7 +262,7 @@
       </div>
     </div>
 
-    <!-- Step 3: الختام والهدية -->
+    <!-- Step 3: ختام الهدية -->
     <div class="step" id="step-3">
       <h2 class="title-glow">🎁 هدية ندائي المتواضعة 🎁</h2>
       <p class="subtitle">مهما قدمت لكِ، لن يوفيكِ حقكِ.. تقبلي هذا التعبير البسيط من قلبي</p>
@@ -289,13 +289,13 @@
   </div>
 
   <script>
-    // الصور الخاصة بك
+    // 1. قسم الصور بروابط Catbox المباشرة
     const galleryImages = [
-      { url: "IMG-20250108-WA0004.jpg", caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" },
-      { url: "IMG-20250616-WA0009.jpg", caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" }
+      { url: "https://files.catbox.moe/jwiczv.jpg", caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" },
+      { url: "https://files.catbox.moe/xz5sf0.jpg", caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" }
     ];
 
-    // الأغاني والروابط
+    // 2. قسم الأغاني بالعبارات وروابط يوتيوب
     const gallerySongs = [
       { title: "الأغنية الأولى 🎶", url: "https://youtu.be/223R5N5t7es?si=IqmwZR4iPm6cqaAt", caption: "هذه اغنيتنا الأولى أو اعتبرها اغنيتي الأولى معك، لأنني وبمجرد سماعها لا أستطيع التفكير الا بك فقط." },
       { title: "أنت مامثلك عيون 🎵", url: "https://youtu.be/Lf3HrxSgeE8?si=a-XcYzh6FnaPgx1M", caption: "هو في مثلك؟ أنت مامثلك عيون" },
