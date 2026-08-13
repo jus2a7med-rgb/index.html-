@@ -30,6 +30,26 @@
       position: relative;
     }
 
+    /* زر التحكم في أغنية الخلفية */
+    .audio-control-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 100;
+      background: rgba(255, 77, 109, 0.3);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
     .space-bg {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -160,7 +180,7 @@
       overflow: hidden;
       border: 2px solid var(--gold);
       box-shadow: 0 0 25px rgba(255, 183, 3, 0.4);
-      background: rgba(0,0,0,0.2);
+      background: #110b29;
     }
 
     .gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -185,10 +205,7 @@
       font-size: 0.85rem;
       font-weight: bold;
       margin-top: 10px;
-      transition: background 0.3s;
     }
-
-    .yt-link-btn:hover { background: #cc0000; }
 
     .note-text {
       font-size: 0.85rem;
@@ -210,22 +227,25 @@
       cursor: pointer;
       margin-top: 20px;
       box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-      transition: transform 0.2s;
     }
-
-    .btn:hover { transform: translateY(-2deg); }
 
     .nav-buttons { display: flex; justify-content: space-between; margin-top: 15px; }
     .btn-secondary { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #ccc; }
 
-    .gift-icon { font-size: 80px; cursor: pointer; margin: 20px 0; display: inline-block; transition: transform 0.3s; }
-    .gift-icon:hover { transform: scale(1.15) rotate(8deg); }
+    .gift-icon { font-size: 80px; cursor: pointer; margin: 20px 0; display: inline-block; }
 
     .progress-bar { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin: 15px 0; }
     .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ff4d6d, #ffb703); transition: width 2.5s ease; }
   </style>
 </head>
 <body>
+
+  <!-- ملف الموسيقى (رابط مباشر موثوق) -->
+  <audio id="bgMusic" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3"></audio>
+  
+  <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()">
+    <span id="audioIcon">🎵</span> <span id="audioText">إيقاف الموسيقى</span>
+  </button>
 
   <div class="space-bg" id="spaceBg"></div>
 
@@ -236,12 +256,12 @@
       <div class="switch-box">
         <h1 class="title-glow">إلى نِداء قلبي.. 💕</h1>
         <p class="subtitle">كان المكان يلفه الظلام، حتى أشرقت أنتِ...</p>
-        <button class="light-btn" id="mainLightBtn" onclick="startExperience()">💡</button>
+        <button class="light-btn" onclick="startExperience()">💡</button>
         <p style="font-size: 0.85rem; color: #888; margin-top: 15px;">إضغطي على المصباح لبدء الحكاية ✨</p>
       </div>
     </div>
 
-    <!-- Step 2: القصة والصور والأغاني الـ 8 -->
+    <!-- Step 2: القصة والصور والأغاني -->
     <div class="step" id="step-2">
       <h2 class="title-glow" style="font-size: 1.8rem;">13 أغسطس 2024 - 1:55 AM 💕</h2>
       <p class="subtitle">لحظة الاعتراف الشجاعة التي غيّرت حياتي للأبد</p>
@@ -289,9 +309,10 @@
   </div>
 
   <script>
+    // روابط صور ممتازة ومفتوحة للجميع عبر شبكة Imgur المباشرة
     const galleryImages = [
-      { url: "https://files.catbox.moe/jwiczv.jpg", fallback: "https://picsum.photos/400/300?random=1", caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" },
-      { url: "https://files.catbox.moe/xz5sf0.jpg", fallback: "https://picsum.photos/400/300?random=2", caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" }
+      { url: "https://i.imgur.com/8N69Ff1.jpg", caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" },
+      { url: "https://i.imgur.com/4M7413c.jpg", caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" }
     ];
 
     const gallerySongs = [
@@ -307,6 +328,7 @@
 
     let currentImgIndex = 0;
     let currentSongIndex = 0;
+    let isPlayingAudio = false;
 
     const chapters = [
       `في مثل هذا اليوم ولد أحمد وأشرقت شمسه، كان أحمد يعيش في سراب يتخبطه يمنة ويسرة حتى ظهرتِ أنتِ.<br><br>
@@ -333,23 +355,44 @@
     let currentChapter = 0;
 
     function startExperience() {
-      document.getElementById('step-1').style.display = 'none';
-      document.getElementById('step-2').style.display = 'block';
+      showStep(2);
       renderChapter();
       startLiveCounter();
       createFloatingHearts();
+
+      // تشغيل الموسيقى فور الضغط
+      const music = document.getElementById('bgMusic');
+      const toggleBtn = document.getElementById('audioToggleBtn');
+      toggleBtn.style.display = 'flex';
+
+      music.play().then(() => {
+        isPlayingAudio = true;
+      }).catch(e => {
+        console.log("Autoplay blocked, user can click toggle button");
+      });
+    }
+
+    function toggleAudio() {
+      const music = document.getElementById('bgMusic');
+      const icon = document.getElementById('audioIcon');
+      const text = document.getElementById('audioText');
+
+      if (isPlayingAudio) {
+        music.pause();
+        isPlayingAudio = false;
+        icon.textContent = '🔇';
+        text.textContent = 'تشغيل الموسيقى';
+      } else {
+        music.play();
+        isPlayingAudio = true;
+        icon.textContent = '🎵';
+        text.textContent = 'إيقاف الموسيقى';
+      }
     }
 
     function showStep(stepNum) {
       document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
       document.getElementById(`step-${stepNum}`).style.display = 'block';
-    }
-
-    function handleImgError(img) {
-      if (img.dataset.triedFallback !== "true") {
-        img.dataset.triedFallback = "true";
-        img.src = galleryImages[currentImgIndex].fallback;
-      }
     }
 
     function renderChapter() {
@@ -360,7 +403,7 @@
           <div class="gallery-box">
             <h3 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 12px;">معرض ذكرياتنا 💕</h3>
             <div class="gallery-frame">
-              <img id="gImg" src="${galleryImages[currentImgIndex].url}" class="gallery-img" onerror="handleImgError(this)">
+              <img id="gImg" src="${galleryImages[currentImgIndex].url}" class="gallery-img">
             </div>
             <p id="gCaption" class="gallery-caption">${galleryImages[currentImgIndex].caption}</p>
             <button class="btn btn-secondary" style="font-size:0.8rem; padding: 6px 15px;" onclick="nextGalleryImage()">الصورة التالية 📸</button>
@@ -395,11 +438,7 @@
 
     function nextGalleryImage() {
       currentImgIndex = (currentImgIndex + 1) % galleryImages.length;
-      const img = document.getElementById('gImg');
-      if (img) {
-        img.dataset.triedFallback = "false";
-        img.src = galleryImages[currentImgIndex].url;
-      }
+      document.getElementById('gImg').src = galleryImages[currentImgIndex].url;
       document.getElementById('gCaption').textContent = galleryImages[currentImgIndex].caption;
     }
 
