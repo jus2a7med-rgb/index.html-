@@ -20,10 +20,9 @@
     .step.active { display: block; animation: fadeIn 0.8s; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    .light-btn { width: 100px; height: 100px; border-radius: 50%; background: #ff4d6d; border: none; cursor: pointer; font-size: 3rem; margin: 20px auto; box-shadow: 0 0 30px rgba(255, 77, 109, 0.5); transition: transform 0.2s; }
-    .light-btn:hover { transform: scale(1.05); }
-    .story-card { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; text-align: right; margin: 20px 0; font-size: 1.2rem; line-height: 1.8; }
-    .btn { background: var(--primary); color: white; padding: 10px 25px; border: none; border-radius: 20px; cursor: pointer; margin: 5px; font-weight: 600; }
+    .light-btn { width: 100px; height: 100px; border-radius: 50%; background: #ff4d6d; border: none; cursor: pointer; font-size: 3rem; margin: 20px auto; box-shadow: 0 0 30px rgba(255, 77, 109, 0.5); }
+    .story-card { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; text-align: right; margin: 20px 0; }
+    .btn { background: var(--primary); color: white; padding: 10px 25px; border: none; border-radius: 20px; cursor: pointer; margin: 5px; }
   </style>
 </head>
 <body>
@@ -54,7 +53,6 @@
     <!-- Step 3 -->
     <div class="step" id="step-3">
       <h2>هدية بسيطة 🎁</h2>
-      <p style="margin: 15px 0;">شكرًا لأنكِ جزء من حياتي 💕</p>
       <button class="btn" onclick="restart()">إعادة الحكاية</button>
     </div>
   </div>
@@ -70,42 +68,27 @@
     let isPlaying = false;
 
     function startExperience() {
-      // 1. الانتقال الفوري للواجهة الثانية بغض النظر عن حالة الصوت
+      // 1. الانتقال للواجهة التالية فوراً
       document.getElementById('step-1').classList.remove('active');
       document.getElementById('step-2').classList.add('active');
-      renderChapter();
-
-      // 2. محاولة تشغيل الموسيقى بشكل مستقل
+      
+      // 2. محاولة تشغيل الموسيقى
       const music = document.getElementById('bgMusic');
       music.play().then(() => {
         isPlaying = true;
         document.getElementById('audioToggleBtn').style.display = 'block';
-        document.getElementById('audioIcon').textContent = '🎵';
-        document.getElementById('audioText').textContent = 'إيقاف';
       }).catch(() => {
-        // في حال حظر المتصفح للتشغيل التلقائي، يظهر الزر ليتيح للمستخدم التشغيل بنفسه
+        // إذا فشل التشغيل (بسبب سياسة المتصفح)، يظهر الزر أيضاً
         document.getElementById('audioToggleBtn').style.display = 'block';
-        document.getElementById('audioIcon').textContent = '🔇';
-        document.getElementById('audioText').textContent = 'تشغيل';
       });
+
+      renderChapter();
     }
 
     function toggleAudio() {
       const music = document.getElementById('bgMusic');
-      const icon = document.getElementById('audioIcon');
-      const text = document.getElementById('audioText');
-
-      if (isPlaying) { 
-        music.pause(); 
-        isPlaying = false; 
-        icon.textContent = '🔇';
-        text.textContent = 'تشغيل';
-      } else { 
-        music.play(); 
-        isPlaying = true; 
-        icon.textContent = '🎵';
-        text.textContent = 'إيقاف';
-      }
+      if (isPlaying) { music.pause(); isPlaying = false; document.getElementById('audioIcon').textContent = '🔇'; }
+      else { music.play(); isPlaying = true; document.getElementById('audioIcon').textContent = '🎵'; }
     }
 
     function renderChapter() {
@@ -118,11 +101,6 @@
       if (currentChapter >= chapters.length) {
         document.getElementById('step-2').classList.remove('active');
         document.getElementById('step-3').classList.add('active');
-        
-        // إطلاق الاحتفال (Confetti) عند الوصول للخطوة الأخيرة
-        if (typeof confetti === 'function') {
-          confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
-        }
         return;
       }
       renderChapter();
