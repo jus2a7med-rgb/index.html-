@@ -8,497 +8,105 @@
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   
   <style>
-    :root {
-      --primary: #ff4d6d;
-      --secondary: #c77dff;
-      --gold: #ffb703;
-      --bg-dark: #0b091a;
-      --card-bg: rgba(255, 255, 255, 0.05);
-      --border: rgba(255, 255, 255, 0.12);
-    }
-
+    :root { --primary: #ff4d6d; --secondary: #c77dff; --gold: #ffb703; --bg-dark: #0b091a; }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+    body { background-color: var(--bg-dark); color: #f8f9fa; min-height: 100vh; display: flex; justify-content: center; align-items: center; overflow-x: hidden; }
+    
+    /* زر التحكم في الموسيقى */
+    .audio-control-btn { position: fixed; top: 15px; left: 15px; z-index: 100; background: rgba(255, 77, 109, 0.25); border: 1px solid var(--primary); color: #fff; padding: 8px 15px; border-radius: 30px; cursor: pointer; display: none; }
 
-    body {
-      background-color: var(--bg-dark);
-      color: #f8f9fa;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-x: hidden;
-      position: relative;
-    }
+    .container { width: 92%; max-width: 680px; margin: 20px auto; padding: 25px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border-radius: 24px; text-align: center; }
+    .step { display: none; }
+    .step.active { display: block; animation: fadeIn 0.8s; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    /* زر التحكم في أغنية الخلفية */
-    .audio-control-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 100;
-      background: rgba(255, 77, 109, 0.25);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--primary);
-      color: #fff;
-      padding: 8px 15px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: all 0.3s;
-    }
-
-    .audio-control-btn:hover {
-      background: var(--primary);
-    }
-
-    .space-bg {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 30%, #1a0933 0%, #080411 100%);
-    }
-
-    .heart-particle {
-      position: absolute;
-      color: rgba(255, 77, 109, 0.4);
-      animation: floatUp 8s infinite linear;
-      font-size: 1rem;
-    }
-
-    @keyframes floatUp {
-      0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
-      50% { opacity: 0.8; }
-      100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
-    }
-
-    .container {
-      position: relative;
-      z-index: 10;
-      width: 92%;
-      max-width: 680px;
-      margin: 20px auto;
-      padding: 25px;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-      text-align: center;
-    }
-
-    .step { display: none; animation: fadeIn 0.8s ease-in-out forwards; }
-    .step.active { display: block; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .title-glow {
-      font-family: 'Amiri', serif;
-      font-size: 2.2rem;
-      color: #fff;
-      text-shadow: 0 0 15px rgba(255, 77, 109, 0.6);
-      margin-bottom: 10px;
-    }
-
-    .subtitle { color: #b8c0ff; font-size: 0.95rem; margin-bottom: 25px; }
-
-    .switch-box { padding: 40px 20px; }
-
-    .light-btn {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #ff4d6d, #800020);
-      border: 2px solid rgba(255,255,255,0.3);
-      color: #fff;
-      font-size: 2.5rem;
-      cursor: pointer;
-      box-shadow: 0 0 30px rgba(255, 77, 109, 0.5);
-      transition: all 0.3s ease;
-      margin: 20px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .light-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 50px rgba(255, 77, 109, 0.8);
-    }
-
-    .counter-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin: 20px 0;
-    }
-
-    .counter-item {
-      background: rgba(255, 255, 255, 0.04);
-      padding: 12px 5px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .counter-value { font-size: 1.4rem; font-weight: 700; color: var(--gold); }
-    .counter-label { font-size: 0.75rem; color: #ccc; }
-
-    .story-card {
-      background: rgba(15, 12, 35, 0.6);
-      border-radius: 16px;
-      padding: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      text-align: right;
-      line-height: 1.9;
-      font-size: 1.05rem;
-      color: #e2e8f0;
-      min-height: 220px;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
-    }
-
-    .quote-box {
-      border-right: 3px solid var(--gold);
-      padding-right: 12px;
-      margin: 15px 0;
-      font-family: 'Amiri', serif;
-      color: #ffe3a8;
-      font-style: italic;
-    }
-
-    .gallery-box, .song-box { margin: 10px 0; text-align: center; }
-
-    .gallery-frame {
-      position: relative;
-      width: 100%;
-      max-width: 320px;
-      height: 260px;
-      margin: 0 auto 15px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 2px solid var(--gold);
-      box-shadow: 0 0 25px rgba(255, 183, 3, 0.4);
-    }
-
-    .gallery-img { width: 100%; height: 100%; object-fit: cover; }
-    .gallery-caption { font-size: 0.95rem; color: #ffd166; font-style: italic; margin-bottom: 10px; line-height: 1.6; }
-
-    .song-card-frame {
-      background: rgba(255, 77, 109, 0.1);
-      border: 2px solid var(--secondary);
-      border-radius: 16px;
-      padding: 18px;
-      margin: 15px auto;
-      max-width: 400px;
-    }
-
-    .yt-link-btn {
-      display: inline-block;
-      background: #ff0000;
-      color: #fff;
-      padding: 8px 18px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin-top: 10px;
-      transition: background 0.3s;
-    }
-
-    .yt-link-btn:hover { background: #cc0000; }
-
-    .note-text {
-      font-size: 0.85rem;
-      color: #a0aab8;
-      margin-top: 15px;
-      padding: 10px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.15);
-      line-height: 1.6;
-    }
-
-    .btn {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 20px;
-      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
-      transition: transform 0.2s;
-    }
-
-    .btn:hover { transform: translateY(-2deg); }
-
-    .nav-buttons { display: flex; justify-content: space-between; margin-top: 15px; }
-    .btn-secondary { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #ccc; }
-
-    .gift-icon { font-size: 80px; cursor: pointer; margin: 20px 0; display: inline-block; transition: transform 0.3s; }
-    .gift-icon:hover { transform: scale(1.15) rotate(8deg); }
-
-    .progress-bar { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin: 15px 0; }
-    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ff4d6d, #ffb703); transition: width 2.5s ease; }
+    .light-btn { width: 100px; height: 100px; border-radius: 50%; background: #ff4d6d; border: none; cursor: pointer; font-size: 3rem; margin: 20px auto; box-shadow: 0 0 30px rgba(255, 77, 109, 0.5); }
+    .story-card { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 15px; text-align: right; margin: 20px 0; }
+    .btn { background: var(--primary); color: white; padding: 10px 25px; border: none; border-radius: 20px; cursor: pointer; margin: 5px; }
   </style>
 </head>
 <body>
 
-  <!-- مشغل موسيقى الخلفية (أغنية راشد الفارس - هذا اليوم) -->
+  <!-- صوت الخلفية -->
   <audio id="bgMusic" loop src="https://files.catbox.moe/lER2VtVPJDA.mp3"></audio>
   
-  <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()" style="display: none;">
-    <span id="audioIcon">🎵</span> <span id="audioText">إيقاف الموسيقى</span>
+  <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()">
+    <span id="audioIcon">🎵</span> <span id="audioText">إيقاف</span>
   </button>
 
-  <div class="space-bg" id="spaceBg"></div>
-
   <div class="container">
-
-    <!-- Step 1: البداية -->
+    <!-- Step 1 -->
     <div class="step active" id="step-1">
-      <div class="switch-box">
-        <h1 class="title-glow">إلى نِداء قلبي.. 💕</h1>
-        <p class="subtitle">كان المكان يلفه الظلام، حتى أشرقت أنتِ...</p>
-        <button class="light-btn" onclick="startExperience()">💡</button>
-        <p style="font-size: 0.85rem; color: #888; margin-top: 15px;">إضغطي على المصباح لبدء الحكاية ✨</p>
-      </div>
+      <h1>إلى نِداء قلبي 💕</h1>
+      <button class="light-btn" onclick="startExperience()">💡</button>
+      <p>اضغطي هنا لبدء الحكاية</p>
     </div>
 
-    <!-- Step 2: قصة الاعتراف والصور والأغاني -->
+    <!-- Step 2 -->
     <div class="step" id="step-2">
-      <h2 class="title-glow" style="font-size: 1.8rem;">13 أغسطس 2024 - 1:55 AM 💕</h2>
-      <p class="subtitle">لحظة الاعتراف الشجاعة التي غيّرت حياتي للأبد</p>
-
-      <!-- العداد التصاعدي المباشر -->
-      <div class="counter-grid">
-        <div class="counter-item"><div class="counter-value" id="days">0</div><div class="counter-label">يوم</div></div>
-        <div class="counter-item"><div class="counter-value" id="hours">0</div><div class="counter-label">ساعة</div></div>
-        <div class="counter-item"><div class="counter-value" id="minutes">0</div><div class="counter-label">دقيقة</div></div>
-        <div class="counter-item"><div class="counter-value" id="seconds">0</div><div class="counter-label">ثانية</div></div>
-      </div>
-
+      <h2 id="chapterTitle">الحكاية</h2>
       <div class="story-card" id="storyContent"></div>
-
-      <div class="nav-buttons">
-        <button class="btn btn-secondary" id="prevBtn" onclick="changeChapter(-1)">السابق</button>
-        <span style="align-self: center; font-size: 0.85rem; color: #aaa;" id="chapterNum">1 / 6</span>
-        <button class="btn" id="nextBtn" onclick="changeChapter(1)">التالي ✨</button>
-      </div>
+      <button class="btn" onclick="changeChapter(-1)">السابق</button>
+      <button class="btn" onclick="changeChapter(1)">التالي</button>
     </div>
 
-    <!-- Step 3: ختام الهدية -->
+    <!-- Step 3 -->
     <div class="step" id="step-3">
-      <h2 class="title-glow">🎁 هدية ندائي المتواضعة 🎁</h2>
-      <p class="subtitle">مهما قدمت لكِ، لن يوفيكِ حقكِ.. تقبلي هذا التعبير البسيط من قلبي</p>
-
-      <div class="gift-icon" id="giftBox" onclick="openFinalGift()">🎁</div>
-      <p id="giftHint" style="color: var(--gold);">اضغطي على الصندوق لفتحه 🤍</p>
-
-      <div id="giftResult" style="display: none; margin-top: 20px;">
-        <div class="story-card" style="text-align: center; border-color: var(--gold);">
-          <p style="font-size: 1.1rem; color: #fff; line-height: 2;">
-            في الختام.. أحبكِ ندائي، وأتمنى في هذا اليوم أن تكوني في أتم الصحة والعافية، وأن يجمعني الله بكِ في خير وعلى خير.<br>
-            <strong style="color: var(--gold); font-size: 1.2rem;">وداعاً حبيبي 🤍</strong>
-          </p>
-          
-          <p style="margin-top: 20px; font-size: 0.9rem; color: #ffb703;">مستوى الحب الدائم 💕</p>
-          <div class="progress-bar"><div class="progress-fill" id="loveFill"></div></div>
-          <p style="font-size: 1.8rem; margin-top: 15px;">💐 🌹 🌸 🌺 🌷 🌻</p>
-
-          <button class="btn btn-secondary" style="margin-top:20px;" onclick="restartExperience()">إعادة تشغيل الحكاية ↺</button>
-        </div>
-      </div>
+      <h2>هدية بسيطة 🎁</h2>
+      <button class="btn" onclick="restart()">إعادة الحكاية</button>
     </div>
-
   </div>
 
   <script>
-    // 1. قسم الصور
-    const galleryImages = [
-      { url: "https://files.catbox.moe/jwiczv.jpg", caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" },
-      { url: "https://files.catbox.moe/xz5sf0.jpg", caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" }
-    ];
-
-    // 2. قسم الأغاني الـ 8 بالعبارات وروابط يوتيوب
-    const gallerySongs = [
-      { title: "الأغنية الأولى 🎶", url: "https://youtu.be/223R5N5t7es?si=IqmwZR4iPm6cqaAt", caption: "هذه اغنيتنا الأولى أو اعتبرها اغنيتي الأولى معك، لأنني وبمجرد سماعها لا أستطيع التفكير الا بك فقط." },
-      { title: "أنت مامثلك عيون 🎵", url: "https://youtu.be/Lf3HrxSgeE8?si=a-XcYzh6FnaPgx1M", caption: "هو في مثلك؟ أنت مامثلك عيون" },
-      { title: "باختياري 💕", url: "https://youtu.be/dyPOITgFpEE?si=ABJ4l5ZreIGTHBVK", caption: "باختياري قلبي حبك باختيااااااري" },
-      { title: "يا بعد المسافة 🌹", url: "https://youtu.be/zVfjCaDclp8?si=-FSUr1cwH7iGLJ_k", caption: "قصري بعد المسافة لا تطول وارحمي قلب يعذبه الحنين." },
-      { title: "تصدقي وإلا احلفلك ✨", url: "https://youtu.be/UC9h35kyrC4?si=QKCHsZC4ehB-3Rrk", caption: "تصدقي وإلا احلفلك اني احبك طيب؟!!!" },
-      { title: "يا عيونك 💖", url: "https://youtu.be/h0T2iOZA-LI?si=LNOOchV2a-hc97wK", caption: "عيوووووووونك يااااااااااااااعيونك ياللي هي آخر امالي والله" },
-      { title: "عيونك لا توريها 🌸", url: "https://youtu.be/nyk8GP12cPE?si=c5d5yFadOT3jPJLg", caption: "عيونك لا توريها ل غيري لا توريها!" },
-      { title: "مثل الشروق 🌅", url: "https://youtu.be/bci_-78aB0s?si=IIPfNDhHE-g5Vyny", caption: "نعم نعم انت \"جيتني مثل الشروق اللي محى عتم الليالي.. جيت فرحه للحزين اللي من همومه هلك\"" }
-    ];
-
-    let currentImgIndex = 0;
-    let currentSongIndex = 0;
-    let isPlayingAudio = false;
-
     const chapters = [
-      `في مثل هذا اليوم ولد أحمد وأشرقت شمسه، كان أحمد يعيش في سراب يتخبطه يمنة ويسرة حتى ظهرتِ أنتِ.<br><br>
-       تعلم أحمد منكِ الكثير، بل وأكاد أجزم أن ما تعلمته منكِ كان أكثر مما تعلمته في مراحل دراستي، تعلمت أن أكون أحمد الحقيقي، تعلمت الحب، الاهتمام، الشعور، والإحساس.`,
-
-      `في مثل هذا اليوم وفي تمام الساعة 1:55 بعد منتصف الليل، كان أحمد في صراع بين قلبه وعقله، قلب يريد المجازفة والاعتراف، وعقل لا يقبل بالرفض، ضعيف، جبان، لا يحب المواجهة، لا يحب الاعتراف، يخشى أن يبوح بما في قلبه..<br><br>
-       نعم كان لا يرى سواكِ، ونعم كان لا ينبض إلا لكِ، ولكن كعادة أحمد سابقاً لم يستطع التغلب على خوفه ومهابة المجازفة. أتى هذا اليوم وهذا التاريخ، وبعد محاولات عدة، شد وجذب، رسالة تُحذف وكلام يُمحى، إقبال وتردد، قرر أحمد أن يبوح لكِ بما في قلبه.. تشجع واعترف لكِ بحبه الذي طالما كان ساكناً في قلبه لا يعلمه غيره، أحبكِ طيلة سنين وأعوام مع نفسه وظل صامتاً يراقب من بعيد، حتى أتى هذا اليوم.`,
-
-      `SPECIAL_GALLERY`,
-      `SPECIAL_SONGS`,
-
-      `طالما شبهتكِ بالسحر، حيث أنكِ جئتِ وغيرتِ أحمد وحياة أحمد من وإلى.. أعجز عن وصفكِ ووصف ما قمتِ به، كيف كان يعيش تلك الحياة البائسة والكئيبة، حياة ليس لها لون ولا طعم ولا رائحة حتى أتيتِ، كنتُ أعمى، جسداً بدون روح، أتيتِ أنتِ وبعثتِ الحياة لذلك الجسد، أحببتُ الحياة وأحببتُ نفسي، ولكن أحببتكِ أكثر.<br>
-      <div class="quote-box">
-        "طول عمري بخاف من الحب وسيرة الحب.. وقابلتك انت لقيتك بتغير كل حياتي.. ما أعرفش إزاي حبيتك ما أعرفش إزاي ياحياتي.. من همسة حب لقيتني باحب وأدوب في الحب وصبح وليل علي بابه."
-      </div>`,
-
-      `وأخيراً وليس آخراً، أريد أن أستغل هذا اليوم وهذه اللحظة لأقول لكِ:
-      <div class="quote-box">
-        "ياما عيون شاغلوني لكن ولا شغلوني.. إلا عيونك انت دول بس اللي خدوني وبحبك أمروني."
-      </div>
-      أحبكِ في الأمس وأحبكِ اليوم وغداً وحتى الممات، سأظل أحبكِ طالما هذا الجسد لا يزال يتنفس 💕`
+      "مرحباً ندائي.. هذه بداية حكايتنا.",
+      "في مثل هذا اليوم.. تغير كل شيء.",
+      "أنتِ كالشروق في حياتي.",
+      "نهاية حكايتنا الحالية."
     ];
-
     let currentChapter = 0;
+    let isPlaying = false;
 
     function startExperience() {
-      showStep(2);
-      renderChapter();
-      startLiveCounter();
-      createFloatingHearts();
-      playBackgroundMusic();
-    }
-
-    function playBackgroundMusic() {
-      const music = document.getElementById('bgMusic');
-      const toggleBtn = document.getElementById('audioToggleBtn');
+      // 1. الانتقال للواجهة التالية فوراً
+      document.getElementById('step-1').classList.remove('active');
+      document.getElementById('step-2').classList.add('active');
       
+      // 2. محاولة تشغيل الموسيقى
+      const music = document.getElementById('bgMusic');
       music.play().then(() => {
-        isPlayingAudio = true;
-        toggleBtn.style.display = 'flex';
-      }).catch(err => {
-        console.log("Audio block bypass required click", err);
-        toggleBtn.style.display = 'flex';
+        isPlaying = true;
+        document.getElementById('audioToggleBtn').style.display = 'block';
+      }).catch(() => {
+        // إذا فشل التشغيل (بسبب سياسة المتصفح)، يظهر الزر أيضاً
+        document.getElementById('audioToggleBtn').style.display = 'block';
       });
+
+      renderChapter();
     }
 
     function toggleAudio() {
       const music = document.getElementById('bgMusic');
-      const icon = document.getElementById('audioIcon');
-      const text = document.getElementById('audioText');
-
-      if (isPlayingAudio) {
-        music.pause();
-        isPlayingAudio = false;
-        icon.textContent = '🔇';
-        text.textContent = 'تشغيل الموسيقى';
-      } else {
-        music.play();
-        isPlayingAudio = true;
-        icon.textContent = '🎵';
-        text.textContent = 'إيقاف الموسيقى';
-      }
-    }
-
-    function showStep(stepNum) {
-      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-      document.getElementById(`step-${stepNum}`).classList.add('active');
+      if (isPlaying) { music.pause(); isPlaying = false; document.getElementById('audioIcon').textContent = '🔇'; }
+      else { music.play(); isPlaying = true; document.getElementById('audioIcon').textContent = '🎵'; }
     }
 
     function renderChapter() {
-      const storyCard = document.getElementById('storyContent');
-
-      if (chapters[currentChapter] === 'SPECIAL_GALLERY') {
-        storyCard.innerHTML = `
-          <div class="gallery-box">
-            <h3 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 12px;">معرض ذكرياتنا 💕</h3>
-            <div class="gallery-frame">
-              <img id="gImg" src="${galleryImages[currentImgIndex].url}" class="gallery-img">
-            </div>
-            <p id="gCaption" class="gallery-caption">${galleryImages[currentImgIndex].caption}</p>
-            <button class="btn btn-secondary" style="font-size:0.8rem; padding: 6px 15px;" onclick="nextGalleryImage()">الصورة التالية 📸</button>
-            <p class="note-text">
-              أعتذر ولكن ليس لدي صور لك كثيرا، فقط هاتين الصورتين هما ما في جعبتي ولا املك غيرهم، عندما امتلك صور اكثر ساضيفهم هنا لاحقا🤍
-            </p>
-          </div>
-        `;
-      } else if (chapters[currentChapter] === 'SPECIAL_SONGS') {
-        storyCard.innerHTML = `
-          <div class="song-box">
-            <h3 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 10px;">معرض أغانيكِ المفضلة 🎵</h3>
-            <div class="song-card-frame">
-              <h4 id="songTitle" style="color: var(--gold); margin-bottom: 8px;">${gallerySongs[currentSongIndex].title}</h4>
-              <p id="songCaption" class="gallery-caption" style="font-size: 0.95rem; color: #fff;">"${gallerySongs[currentSongIndex].caption}"</p>
-              <a id="songLink" href="${gallerySongs[currentSongIndex].url}" target="_blank" class="yt-link-btn">▶ الاستماع للأغنية عبر يوتيوب</a>
-            </div>
-            <button class="btn btn-secondary" style="font-size:0.8rem; padding: 6px 15px;" onclick="nextSong()">الأغنية التالية 🎧 (${currentSongIndex + 1}/8)</button>
-            <p class="note-text">
-              هذه نبذه وغيض من فيض ومن بحر الأغاني التي تذكرني بك، هنالك الكثير والكثير ولكن احببت ان انتقي لك بعض منها فقط، احبك ندائي.🤍
-            </p>
-          </div>
-        `;
-      } else {
-        storyCard.innerHTML = chapters[currentChapter];
-      }
-
-      document.getElementById('chapterNum').textContent = `${currentChapter + 1} / ${chapters.length}`;
-      document.getElementById('prevBtn').style.visibility = currentChapter === 0 ? 'hidden' : 'visible';
-      document.getElementById('nextBtn').textContent = currentChapter === chapters.length - 1 ? 'إنتقلي للهدية 🎁' : 'التالي ✨';
-    }
-
-    function nextGalleryImage() {
-      currentImgIndex = (currentImgIndex + 1) % galleryImages.length;
-      document.getElementById('gImg').src = galleryImages[currentImgIndex].url;
-      document.getElementById('gCaption').textContent = galleryImages[currentImgIndex].caption;
-    }
-
-    function nextSong() {
-      currentSongIndex = (currentSongIndex + 1) % gallerySongs.length;
-      document.getElementById('songTitle').textContent = gallerySongs[currentSongIndex].title;
-      document.getElementById('songCaption').textContent = `"${gallerySongs[currentSongIndex].caption}"`;
-      document.getElementById('songLink').href = gallerySongs[currentSongIndex].url;
+      document.getElementById('storyContent').innerHTML = chapters[currentChapter];
     }
 
     function changeChapter(dir) {
-      if (dir === 1 && currentChapter === chapters.length - 1) {
-        showStep(3);
+      currentChapter += dir;
+      if (currentChapter < 0) currentChapter = 0;
+      if (currentChapter >= chapters.length) {
+        document.getElementById('step-2').classList.remove('active');
+        document.getElementById('step-3').classList.add('active');
         return;
       }
-      currentChapter += dir;
       renderChapter();
     }
-
-    function startLiveCounter() {
-      const startDate = new Date('2024-08-13T01:55:00');
-      setInterval(() => {
-        const now = new Date();
-        const diff = now - startDate;
-        document.getElementById('days').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-        document.getElementById('hours').textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        document.getElementById('minutes').textContent = Math.floor((diff / 1000 / 60) % 60);
-        document.getElementById('seconds').textContent = Math.floor((diff / 1000) % 60);
-      }, 1000);
-    }
-
-    function createFloatingHearts() {
-      const bg = document.getElementById('spaceBg');
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart-particle';
-        heart.innerHTML = ['💕', '✨', '💖', '⭐'][Math.floor(Math.random() * 4)];
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        heart.style.animationDelay = Math.random() * 5 + 's';
-        bg.appendChild(heart);
-      }
-    }
-
-    function openFinalGift() {
-      document.getElementById('giftBox').textContent = '🎉';
-      docume
+    
+    function restart() { location.reload(); }
+  </script>
+</body>
+</html>
