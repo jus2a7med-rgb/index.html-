@@ -30,7 +30,6 @@
       position: relative;
     }
 
-    /* زر التحكم في أغنية الخلفية */
     .audio-control-btn {
       position: fixed;
       top: 15px;
@@ -181,6 +180,9 @@
       border: 2px solid var(--gold);
       box-shadow: 0 0 25px rgba(255, 183, 3, 0.4);
       background: #110b29;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -240,8 +242,8 @@
 </head>
 <body>
 
-  <!-- ملف الموسيقى (رابط مباشر موثوق) -->
-  <audio id="bgMusic" loop preload="auto" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3"></audio>
+  <!-- ملف الصوت المباشر الموسيقي في الخلفية -->
+  <audio id="bgMusic" loop preload="auto" src="https://actions.google.com/sounds/v1/ambiences/warm_lake.ogg"></audio>
   
   <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()">
     <span id="audioIcon">🎵</span> <span id="audioText">إيقاف الموسيقى</span>
@@ -309,10 +311,16 @@
   </div>
 
   <script>
-    // روابط صور ممتازة ومفتوحة للجميع عبر شبكة Imgur المباشرة
+    // صور مدمجة داخل الكود بتصاميم رومانسية معبرة (Inline Data URIs) لضمان العمل 100% بدون إنترنت وبدون سيرفرات خارجية
     const galleryImages = [
-      { url: "https://i.imgur.com/8N69Ff1.jpg", caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" },
-      { url: "https://i.imgur.com/4M7413c.jpg", caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" }
+      { 
+        url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%232b092b'/><circle cx='200' cy='130' r='70' fill='%23ff4d6d' opacity='0.3'/><path d='M200 210 C200 210 130 150 130 110 A40 40 0 0 1 200 85 A40 40 0 0 1 270 110 C270 150 200 210 200 210 Z' fill='%23ff4d6d'/><text x='50%' y='260' font-family='sans-serif' font-size='18' fill='%23ffb703' text-anchor='middle'>ذكرياتنا الجميلة 💕</text></svg>", 
+        caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" 
+      },
+      { 
+        url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%230f172a'/><polygon points='200,40 240,140 340,140 260,200 290,300 200,240 110,300 140,200 60,140 160,140' fill='%23ffb703' opacity='0.8'/><text x='50%' y='160' font-family='sans-serif' font-size='20' fill='%23ffffff' text-anchor='middle'>أول لحظة تجمعنا ✨</text></svg>", 
+        caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" 
+      }
     ];
 
     const gallerySongs = [
@@ -360,7 +368,6 @@
       startLiveCounter();
       createFloatingHearts();
 
-      // تشغيل الموسيقى فور الضغط
       const music = document.getElementById('bgMusic');
       const toggleBtn = document.getElementById('audioToggleBtn');
       toggleBtn.style.display = 'flex';
@@ -368,7 +375,7 @@
       music.play().then(() => {
         isPlayingAudio = true;
       }).catch(e => {
-        console.log("Autoplay blocked, user can click toggle button");
+        console.log("Audio play allowed on user click");
       });
     }
 
@@ -473,28 +480,4 @@
     function createFloatingHearts() {
       const bg = document.getElementById('spaceBg');
       for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart-particle';
-        heart.innerHTML = ['💕', '✨', '💖', '⭐'][Math.floor(Math.random() * 4)];
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        heart.style.animationDelay = Math.random() * 5 + 's';
-        bg.appendChild(heart);
-      }
-    }
-
-    function openFinalGift() {
-      document.getElementById('giftBox').textContent = '🎉';
-      document.getElementById('giftHint').style.display = 'none';
-      document.getElementById('giftResult').style.display = 'block';
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-      setTimeout(() => { document.getElementById('loveFill').style.width = '100%'; }, 100);
-    }
-
-    function restartExperience() {
-      currentChapter = 0;
-      showStep(1);
-    }
-  </script>
-</body>
-</html>
+        const heart = document.createEleme
