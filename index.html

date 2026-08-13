@@ -30,6 +30,31 @@
       position: relative;
     }
 
+    /* زر التحكم في أغنية الخلفية */
+    .audio-control-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 100;
+      background: rgba(255, 77, 109, 0.25);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--primary);
+      color: #fff;
+      padding: 8px 15px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s;
+    }
+
+    .audio-control-btn:hover {
+      background: var(--primary);
+    }
+
     .space-bg {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -226,6 +251,13 @@
 </head>
 <body>
 
+  <!-- مشغل موسيقى الخلفية (أغنية راشد الفارس - هذا اليوم) -->
+  <audio id="bgMusic" loop src="https://files.catbox.moe/lER2VtVPJDA.mp3"></audio>
+  
+  <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()" style="display: none;">
+    <span id="audioIcon">🎵</span> <span id="audioText">إيقاف الموسيقى</span>
+  </button>
+
   <div class="space-bg" id="spaceBg"></div>
 
   <div class="container">
@@ -289,13 +321,13 @@
   </div>
 
   <script>
-    // 1. قسم الصور بروابط Catbox المباشرة
+    // 1. قسم الصور
     const galleryImages = [
       { url: "https://files.catbox.moe/jwiczv.jpg", caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" },
       { url: "https://files.catbox.moe/xz5sf0.jpg", caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" }
     ];
 
-    // 2. قسم الأغاني بالعبارات وروابط يوتيوب
+    // 2. قسم الأغاني الـ 8 بالعبارات وروابط يوتيوب
     const gallerySongs = [
       { title: "الأغنية الأولى 🎶", url: "https://youtu.be/223R5N5t7es?si=IqmwZR4iPm6cqaAt", caption: "هذه اغنيتنا الأولى أو اعتبرها اغنيتي الأولى معك، لأنني وبمجرد سماعها لا أستطيع التفكير الا بك فقط." },
       { title: "أنت مامثلك عيون 🎵", url: "https://youtu.be/Lf3HrxSgeE8?si=a-XcYzh6FnaPgx1M", caption: "هو في مثلك؟ أنت مامثلك عيون" },
@@ -303,11 +335,13 @@
       { title: "يا بعد المسافة 🌹", url: "https://youtu.be/zVfjCaDclp8?si=-FSUr1cwH7iGLJ_k", caption: "قصري بعد المسافة لا تطول وارحمي قلب يعذبه الحنين." },
       { title: "تصدقي وإلا احلفلك ✨", url: "https://youtu.be/UC9h35kyrC4?si=QKCHsZC4ehB-3Rrk", caption: "تصدقي وإلا احلفلك اني احبك طيب؟!!!" },
       { title: "يا عيونك 💖", url: "https://youtu.be/h0T2iOZA-LI?si=LNOOchV2a-hc97wK", caption: "عيوووووووونك يااااااااااااااعيونك ياللي هي آخر امالي والله" },
-      { title: "عيونك لا توريها 🌸", url: "https://youtu.be/nyk8GP12cPE?si=c5d5yFadOT3jPJLg", caption: "عيونك لا توريها ل غيري لا توريها!" }
+      { title: "عيونك لا توريها 🌸", url: "https://youtu.be/nyk8GP12cPE?si=c5d5yFadOT3jPJLg", caption: "عيونك لا توريها ل غيري لا توريها!" },
+      { title: "مثل الشروق 🌅", url: "https://youtu.be/bci_-78aB0s?si=IIPfNDhHE-g5Vyny", caption: "نعم نعم انت \"جيتني مثل الشروق اللي محى عتم الليالي.. جيت فرحه للحزين اللي من همومه هلك\"" }
     ];
 
     let currentImgIndex = 0;
     let currentSongIndex = 0;
+    let isPlayingAudio = false;
 
     const chapters = [
       `في مثل هذا اليوم ولد أحمد وأشرقت شمسه، كان أحمد يعيش في سراب يتخبطه يمنة ويسرة حتى ظهرتِ أنتِ.<br><br>
@@ -338,6 +372,38 @@
       renderChapter();
       startLiveCounter();
       createFloatingHearts();
+      playBackgroundMusic();
+    }
+
+    function playBackgroundMusic() {
+      const music = document.getElementById('bgMusic');
+      const toggleBtn = document.getElementById('audioToggleBtn');
+      
+      music.play().then(() => {
+        isPlayingAudio = true;
+        toggleBtn.style.display = 'flex';
+      }).catch(err => {
+        console.log("Audio block bypass required click", err);
+        toggleBtn.style.display = 'flex';
+      });
+    }
+
+    function toggleAudio() {
+      const music = document.getElementById('bgMusic');
+      const icon = document.getElementById('audioIcon');
+      const text = document.getElementById('audioText');
+
+      if (isPlayingAudio) {
+        music.pause();
+        isPlayingAudio = false;
+        icon.textContent = '🔇';
+        text.textContent = 'تشغيل الموسيقى';
+      } else {
+        music.play();
+        isPlayingAudio = true;
+        icon.textContent = '🎵';
+        text.textContent = 'إيقاف الموسيقى';
+      }
     }
 
     function showStep(stepNum) {
@@ -371,7 +437,7 @@
               <p id="songCaption" class="gallery-caption" style="font-size: 0.95rem; color: #fff;">"${gallerySongs[currentSongIndex].caption}"</p>
               <a id="songLink" href="${gallerySongs[currentSongIndex].url}" target="_blank" class="yt-link-btn">▶ الاستماع للأغنية عبر يوتيوب</a>
             </div>
-            <button class="btn btn-secondary" style="font-size:0.8rem; padding: 6px 15px;" onclick="nextSong()">الأغنية التالية 🎧 (${currentSongIndex + 1}/7)</button>
+            <button class="btn btn-secondary" style="font-size:0.8rem; padding: 6px 15px;" onclick="nextSong()">الأغنية التالية 🎧 (${currentSongIndex + 1}/8)</button>
             <p class="note-text">
               هذه نبذه وغيض من فيض ومن بحر الأغاني التي تذكرني بك، هنالك الكثير والكثير ولكن احببت ان انتقي لك بعض منها فقط، احبك ندائي.🤍
             </p>
@@ -435,16 +501,4 @@
 
     function openFinalGift() {
       document.getElementById('giftBox').textContent = '🎉';
-      document.getElementById('giftHint').style.display = 'none';
-      document.getElementById('giftResult').style.display = 'block';
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-      setTimeout(() => { document.getElementById('loveFill').style.width = '100%'; }, 100);
-    }
-
-    function restartExperience() {
-      currentChapter = 0;
-      showStep(1);
-    }
-  </script>
-</body>
-</html>
+      docume
