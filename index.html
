@@ -243,7 +243,7 @@
 <body>
 
   <!-- ملف الصوت المباشر الموسيقي في الخلفية -->
-  <audio id="bgMusic" loop preload="auto" src="https://actions.google.com/sounds/v1/ambiences/warm_lake.ogg"></audio>
+  <audio id="bgMusic" loop preload="none" src="https://actions.google.com/sounds/v1/ambiences/warm_lake.ogg"></audio>
   
   <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()">
     <span id="audioIcon">🎵</span> <span id="audioText">إيقاف الموسيقى</span>
@@ -311,7 +311,7 @@
   </div>
 
   <script>
-    // صور مدمجة داخل الكود بتصاميم رومانسية معبرة (Inline Data URIs) لضمان العمل 100% بدون إنترنت وبدون سيرفرات خارجية
+    // صور مدمجة داخل الكود بتصاميم رومانسية معبرة
     const galleryImages = [
       { 
         url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%232b092b'/><circle cx='200' cy='130' r='70' fill='%23ff4d6d' opacity='0.3'/><path d='M200 210 C200 210 130 150 130 110 A40 40 0 0 1 200 85 A40 40 0 0 1 270 110 C270 150 200 210 200 210 Z' fill='%23ff4d6d'/><text x='50%' y='260' font-family='sans-serif' font-size='18' fill='%23ffb703' text-anchor='middle'>ذكرياتنا الجميلة 💕</text></svg>", 
@@ -328,7 +328,7 @@
       { title: "أنت مامثلك عيون 🎵", url: "https://youtu.be/Lf3HrxSgeE8?si=a-XcYzh6FnaPgx1M", caption: "هو في مثلك؟ أنت مامثلك عيون" },
       { title: "باختياري 💕", url: "https://youtu.be/dyPOITgFpEE?si=ABJ4l5ZreIGTHBVK", caption: "باختياري قلبي حبك باختيااااااري" },
       { title: "يا بعد المسافة 🌹", url: "https://youtu.be/zVfjCaDclp8?si=-FSUr1cwH7iGLJ_k", caption: "قصري بعد المسافة لا تطول وارحمي قلب يعذبه الحنين." },
-      { title: "تصدقي وإلا احلفلك ✨", url: "https://youtu.be/UC9h35kyrC4?si=QKCHsZC4ehB-3Rrk", caption: "تصدقي وإلا احلفلك اني احبك طيب؟!!!" },
+      { title: "تصدقي وإلا احلفلك ✨", url: "https://youtu.be/UC9h35kyrC4?si=QKCHsZC4ehB-3Rrk", caption: "تصدقي وإلا احلفلك اني احبكطيب؟!!!" },
       { title: "يا عيونك 💖", url: "https://youtu.be/h0T2iOZA-LI?si=LNOOchV2a-hc97wK", caption: "عيوووووووونك يااااااااااااااعيونك ياللي هي آخر امالي والله" },
       { title: "عيونك لا توريها 🌸", url: "https://youtu.be/nyk8GP12cPE?si=c5d5yFadOT3jPJLg", caption: "عيونك لا توريها ل غيري لا توريها!" },
       { title: "مثل الشروق 🌅", url: "https://youtu.be/bci_-78aB0s?si=IIPfNDhHE-g5Vyny", caption: "نعم نعم انت \"جيتني مثل الشروق اللي محى عتم الليالي.. جيت فرحه للحزين اللي من همومه هلك\"" }
@@ -363,20 +363,38 @@
     let currentChapter = 0;
 
     function startExperience() {
-      showStep(2);
+      // إخفاء الخطوة الأولى وإظهار الخطوة الثانية فوراً
+      document.getElementById('step-1').classList.remove('active');
+      document.getElementById('step-1').style.display = 'none';
+      
+      const step2 = document.getElementById('step-2');
+      step2.style.display = 'block';
+      step2.classList.add('active');
+
       renderChapter();
       startLiveCounter();
       createFloatingHearts();
 
+      // محاولة تشغيل الصوت بأمان
       const music = document.getElementById('bgMusic');
       const toggleBtn = document.getElementById('audioToggleBtn');
       toggleBtn.style.display = 'flex';
 
-      music.play().then(() => {
-        isPlayingAudio = true;
-      }).catch(e => {
-        console.log("Audio play allowed on user click");
-      });
+      try {
+        let playPromise = music.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            isPlayingAudio = true;
+          }).catch(err => {
+            console.log("Audio play blocked, user can click button");
+            isPlayingAudio = false;
+            document.getElementById('audioIcon').textContent = '🔇';
+            document.getElementById('audioText').textContent = 'تشغيل الموسيقى';
+          });
+        }
+      } catch (e) {
+        console.log("Audio init error ignored");
+      }
     }
 
     function toggleAudio() {
@@ -390,16 +408,22 @@
         icon.textContent = '🔇';
         text.textContent = 'تشغيل الموسيقى';
       } else {
-        music.play();
-        isPlayingAudio = true;
-        icon.textContent = '🎵';
-        text.textContent = 'إيقاف الموسيقى';
+        music.play().then(() => {
+          isPlayingAudio = true;
+          icon.textContent = '🎵';
+          text.textContent = 'إيقاف الموسيقى';
+        }).catch(e => console.log(e));
       }
     }
 
     function showStep(stepNum) {
-      document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
-      document.getElementById(`step-${stepNum}`).style.display = 'block';
+      document.querySelectorAll('.step').forEach(s => {
+        s.style.display = 'none';
+        s.classList.remove('active');
+      });
+      const target = document.getElementById(`step-${stepNum}`);
+      target.style.display = 'block';
+      target.classList.add('active');
     }
 
     function renderChapter() {
@@ -480,4 +504,28 @@
     function createFloatingHearts() {
       const bg = document.getElementById('spaceBg');
       for (let i = 0; i < 20; i++) {
-        const heart = document.createEleme
+        const heart = document.createElement('div');
+        heart.className = 'heart-particle';
+        heart.innerHTML = ['💕', '✨', '💖', '⭐'][Math.floor(Math.random() * 4)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        bg.appendChild(heart);
+      }
+    }
+
+    function openFinalGift() {
+      document.getElementById('giftBox').textContent = '🎉';
+      document.getElementById('giftHint').style.display = 'none';
+      document.getElementById('giftResult').style.display = 'block';
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      setTimeout(() => { document.getElementById('loveFill').style.width = '100%'; }, 100);
+    }
+
+    function restartExperience() {
+      currentChapter = 0;
+      showStep(1);
+    }
+  </script>
+</body>
+</html>
