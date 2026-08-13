@@ -30,29 +30,6 @@
       position: relative;
     }
 
-    /* زر التحكم في أغنية الخلفية */
-    .audio-control-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 100;
-      background: rgba(255, 77, 109, 0.25);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--primary);
-      color: #fff;
-      padding: 8px 15px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: all 0.3s;
-    }
-
-    .audio-control-btn:hover { background: var(--primary); }
-
     .space-bg {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -249,13 +226,6 @@
 </head>
 <body>
 
-  <!-- صوت الخلفية -->
-  <audio id="bgMusic" loop src="https://files.catbox.moe/lER2VtVPJDA.mp3"></audio>
-  
-  <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()">
-    <span id="audioIcon">🎵</span> <span id="audioText">إيقاف الموسيقى</span>
-  </button>
-
   <div class="space-bg" id="spaceBg"></div>
 
   <div class="container">
@@ -265,7 +235,7 @@
       <div class="switch-box">
         <h1 class="title-glow">إلى نِداء قلبي.. 💕</h1>
         <p class="subtitle">كان المكان يلفه الظلام، حتى أشرقت أنتِ...</p>
-        <button class="light-btn" onclick="startExperience()">💡</button>
+        <button class="light-btn" id="mainLightBtn" onclick="startExperience()">💡</button>
         <p style="font-size: 0.85rem; color: #888; margin-top: 15px;">إضغطي على المصباح لبدء الحكاية ✨</p>
       </div>
     </div>
@@ -336,7 +306,6 @@
 
     let currentImgIndex = 0;
     let currentSongIndex = 0;
-    let isPlayingAudio = false;
 
     const chapters = [
       `في مثل هذا اليوم ولد أحمد وأشرقت شمسه، كان أحمد يعيش في سراب يتخبطه يمنة ويسرة حتى ظهرتِ أنتِ.<br><br>
@@ -363,45 +332,16 @@
     let currentChapter = 0;
 
     function startExperience() {
-      // 1. الانتقال فوراً للشاشة الثانية لضمان الاستجابة
-      showStep(2);
+      document.getElementById('step-1').style.display = 'none';
+      document.getElementById('step-2').style.display = 'block';
       renderChapter();
       startLiveCounter();
       createFloatingHearts();
-
-      // 2. تشغيل الأغنية ومراعاة سياسات المتصفح
-      const music = document.getElementById('bgMusic');
-      const toggleBtn = document.getElementById('audioToggleBtn');
-      toggleBtn.style.display = 'flex';
-
-      music.play().then(() => {
-        isPlayingAudio = true;
-      }).catch(err => {
-        console.log("Audio waiting user interaction", err);
-      });
-    }
-
-    function toggleAudio() {
-      const music = document.getElementById('bgMusic');
-      const icon = document.getElementById('audioIcon');
-      const text = document.getElementById('audioText');
-
-      if (isPlayingAudio) {
-        music.pause();
-        isPlayingAudio = false;
-        icon.textContent = '🔇';
-        text.textContent = 'تشغيل الموسيقى';
-      } else {
-        music.play();
-        isPlayingAudio = true;
-        icon.textContent = '🎵';
-        text.textContent = 'إيقاف الموسيقى';
-      }
     }
 
     function showStep(stepNum) {
-      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
-      document.getElementById(`step-${stepNum}`).classList.add('active');
+      document.querySelectorAll('.step').forEach(s => s.style.display = 'none');
+      document.getElementById(`step-${stepNum}`).style.display = 'block';
     }
 
     function renderChapter() {
@@ -497,4 +437,13 @@
       document.getElementById('giftHint').style.display = 'none';
       document.getElementById('giftResult').style.display = 'block';
       confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-      setTimeou
+      setTimeout(() => { document.getElementById('loveFill').style.width = '100%'; }, 100);
+    }
+
+    function restartExperience() {
+      currentChapter = 0;
+      showStep(1);
+    }
+  </script>
+</body>
+</html>
