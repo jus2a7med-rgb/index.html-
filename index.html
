@@ -1,954 +1,1413 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>إلى ندائي 💕 | 13/8/2024</title>
+<meta charset="UTF-8">
 
-  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
 
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<meta name="theme-color"
+      content="#0b091a">
 
-  <style>
-    :root {
-      --primary: #ff4d6d;
-      --secondary: #c77dff;
-      --gold: #ffb703;
-      --bg-dark: #0b091a;
-      --card-bg: rgba(255, 255, 255, 0.05);
-      --border: rgba(255, 255, 255, 0.12);
-    }
+<title>إلى ندائي 💕 | 13/8/2024</title>
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Cairo', sans-serif;
-    }
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
 
-    body {
-      background-color: var(--bg-dark);
-      color: #f8f9fa;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow-x: hidden;
-      position: relative;
-    }
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
 
-    .audio-control-btn {
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 100;
-      background: rgba(255, 77, 109, 0.3);
-      backdrop-filter: blur(8px);
-      border: 1px solid var(--primary);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 30px;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: none;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;800&display=swap"
+      rel="stylesheet">
 
-    .space-bg {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-      pointer-events: none;
-      background: radial-gradient(circle at 50% 30%, #1a0933 0%, #080411 100%);
-    }
 
-    .heart-particle {
-      position: absolute;
-      color: rgba(255, 77, 109, 0.4);
-      animation: floatUp 8s infinite linear;
-      font-size: 1rem;
-    }
+<style>
 
-    @keyframes floatUp {
-      0% {
-        transform: translateY(100vh) scale(0.5) rotate(0deg);
+/* =====================================================
+   الأساس
+===================================================== */
+
+:root {
+    --primary: #ff4d6d;
+    --secondary: #c77dff;
+    --gold: #ffb703;
+    --bg-dark: #0b091a;
+    --card-bg: rgba(255,255,255,0.05);
+    --border: rgba(255,255,255,0.12);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--bg-dark);
+    color: #f8f9fa;
+    min-height: 100vh;
+    font-family: 'Cairo', sans-serif;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    overflow-x: hidden;
+
+    position: relative;
+}
+
+
+/* =====================================================
+   الخلفية
+===================================================== */
+
+.space-bg {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 30%,
+            #1a0933 0%,
+            #080411 70%,
+            #05030a 100%
+        );
+}
+
+
+/* =====================================================
+   القلوب المتحركة
+===================================================== */
+
+.heart-particle {
+
+    position: absolute;
+
+    bottom: -50px;
+
+    color: rgba(255,77,109,0.45);
+
+    font-size: 18px;
+
+    animation:
+        floatUp 8s linear infinite;
+
+    opacity: 0;
+}
+
+@keyframes floatUp {
+
+    0% {
+
+        transform:
+            translateY(0)
+            scale(.5)
+            rotate(0deg);
+
         opacity: 0;
-      }
 
-      50% {
-        opacity: 0.8;
-      }
-
-      100% {
-        transform: translateY(-10vh) scale(1.2) rotate(360deg);
-        opacity: 0;
-      }
     }
+
+    15% {
+        opacity: .8;
+    }
+
+    80% {
+        opacity: .5;
+    }
+
+    100% {
+
+        transform:
+            translateY(-115vh)
+            scale(1.2)
+            rotate(360deg);
+
+        opacity: 0;
+
+    }
+}
+
+
+/* =====================================================
+   زر الموسيقى
+===================================================== */
+
+.audio-control-btn {
+
+    position: fixed;
+
+    top: 15px;
+    left: 15px;
+
+    z-index: 1000;
+
+    background:
+        rgba(255,77,109,.25);
+
+    backdrop-filter: blur(10px);
+
+    border:
+        1px solid
+        rgba(255,77,109,.7);
+
+    color: white;
+
+    padding:
+        9px 15px;
+
+    border-radius: 30px;
+
+    font-family: 'Cairo', sans-serif;
+
+    font-size: .8rem;
+
+    cursor: pointer;
+
+    display: none;
+
+    align-items: center;
+
+    gap: 6px;
+
+    box-shadow:
+        0 5px 20px rgba(0,0,0,.3);
+
+}
+
+
+/* =====================================================
+   الحاوية الرئيسية
+===================================================== */
+
+.container {
+
+    position: relative;
+
+    z-index: 10;
+
+    width: 92%;
+
+    max-width: 680px;
+
+    margin: 25px auto;
+
+    padding: 25px;
+
+    background:
+        rgba(255,255,255,.05);
+
+    backdrop-filter:
+        blur(16px);
+
+    -webkit-backdrop-filter:
+        blur(16px);
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,.6);
+
+    text-align: center;
+
+}
+
+
+/* =====================================================
+   الصفحات
+===================================================== */
+
+.step {
+    display: none;
+}
+
+.step.active {
+
+    display: block;
+
+    animation:
+        fadeIn .7s ease forwards;
+
+}
+
+@keyframes fadeIn {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px);
+
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+
+/* =====================================================
+   العناوين
+===================================================== */
+
+.title-glow {
+
+    font-family:
+        'Amiri',
+        serif;
+
+    font-size:
+        2.2rem;
+
+    color: white;
+
+    text-shadow:
+        0 0 15px
+        rgba(255,77,109,.7);
+
+    margin-bottom: 10px;
+
+}
+
+.subtitle {
+
+    color: #b8c0ff;
+
+    font-size: .95rem;
+
+    margin-bottom: 25px;
+
+    line-height: 1.8;
+
+}
+
+
+/* =====================================================
+   المصباح
+===================================================== */
+
+.switch-box {
+
+    padding:
+        40px 20px;
+
+}
+
+.light-btn {
+
+    width: 110px;
+
+    height: 110px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid
+        rgba(255,255,255,.35);
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff4d6d,
+            #800020
+        );
+
+    color: white;
+
+    font-size: 3rem;
+
+    cursor: pointer;
+
+    margin: 25px auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    box-shadow:
+        0 0 30px
+        rgba(255,77,109,.55);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+.light-btn:hover {
+
+    transform:
+        scale(1.08);
+
+    box-shadow:
+        0 0 55px
+        rgba(255,77,109,.85);
+
+}
+
+.light-btn:active {
+
+    transform:
+        scale(.95);
+
+}
+
+
+/* =====================================================
+   العداد
+===================================================== */
+
+.counter-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 10px;
+
+    margin: 20px 0;
+
+}
+
+.counter-item {
+
+    background:
+        rgba(255,255,255,.04);
+
+    padding:
+        12px 5px;
+
+    border-radius: 12px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+}
+
+.counter-value {
+
+    font-size: 1.35rem;
+
+    font-weight: 700;
+
+    color:
+        var(--gold);
+
+}
+
+.counter-label {
+
+    font-size: .72rem;
+
+    color: #ccc;
+
+}
+
+
+/* =====================================================
+   بطاقة القصة
+===================================================== */
+
+.story-card {
+
+    background:
+        rgba(15,12,35,.65);
+
+    border-radius: 16px;
+
+    padding: 22px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    text-align: right;
+
+    line-height: 2;
+
+    font-size: 1.03rem;
+
+    color: #e2e8f0;
+
+    min-height: 220px;
+
+    box-shadow:
+        inset 0 0 25px
+        rgba(0,0,0,.25);
+
+}
+
+.quote-box {
+
+    border-right:
+        3px solid
+        var(--gold);
+
+    padding-right: 12px;
+
+    margin: 18px 0;
+
+    font-family:
+        'Amiri',
+        serif;
+
+    color:
+        #ffe3a8;
+
+    font-style: italic;
+
+}
+
+
+/* =====================================================
+   معرض الصور
+===================================================== */
+
+.gallery-box {
+
+    text-align: center;
+
+}
+
+.gallery-frame {
+
+    width: 100%;
+
+    max-width: 350px;
+
+    height: 300px;
+
+    margin:
+        15px auto;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    border:
+        2px solid
+        var(--gold);
+
+    background:
+        #110b29;
+
+    box-shadow:
+        0 0 25px
+        rgba(255,183,3,.35);
+
+}
+
+.gallery-img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+}
+
+.gallery-caption {
+
+    color:
+        #ffd166;
+
+    font-size: .92rem;
+
+    line-height: 1.7;
+
+    font-style: italic;
+
+    margin-bottom: 10px;
+
+}
+
+
+/* =====================================================
+   الأغاني
+===================================================== */
+
+.song-box {
+
+    text-align: center;
+
+}
+
+.song-card-frame {
+
+    background:
+        rgba(255,77,109,.1);
+
+    border:
+        2px solid
+        var(--secondary);
+
+    border-radius: 16px;
+
+    padding: 20px;
+
+    margin: 15px auto;
+
+    max-width: 430px;
+
+}
+
+.song-title {
+
+    color:
+        var(--gold);
+
+    margin-bottom: 10px;
+
+}
+
+.yt-link-btn {
+
+    display: inline-block;
+
+    background:
+        #ff0000;
+
+    color: white;
+
+    padding:
+        9px 18px;
+
+    border-radius: 22px;
+
+    text-decoration: none;
+
+    font-size: .85rem;
+
+    font-weight: bold;
+
+    margin-top: 12px;
+
+}
+
+
+/* =====================================================
+   الأزرار
+===================================================== */
+
+.btn {
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--secondary)
+        );
+
+    color: white;
+
+    border: none;
+
+    padding:
+        11px 25px;
+
+    border-radius: 50px;
+
+    font-family:
+        'Cairo',
+        sans-serif;
+
+    font-size: .95rem;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    margin-top: 15px;
+
+    box-shadow:
+        0 5px 18px
+        rgba(255,77,109,.35);
+
+    transition:
+        transform .2s ease;
+
+}
+
+.btn:active {
+
+    transform:
+        scale(.96);
+
+}
+
+.btn-secondary {
+
+    background:
+        transparent;
+
+    border:
+        1px solid
+        rgba(255,255,255,.3);
+
+    color: #ddd;
+
+    box-shadow: none;
+
+}
+
+.nav-buttons {
+
+    display: flex;
+
+    justify-content:
+        space-between;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 18px;
+
+}
+
+
+/* =====================================================
+   الهدية
+===================================================== */
+
+.gift-icon {
+
+    font-size: 85px;
+
+    cursor: pointer;
+
+    display: inline-block;
+
+    margin: 20px 0;
+
+    transition:
+        transform .25s ease;
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+.gift-icon:hover {
+
+    transform:
+        scale(1.1)
+        rotate(-4deg);
+
+}
+
+.progress-bar {
+
+    width: 100%;
+
+    height: 12px;
+
+    background:
+        rgba(255,255,255,.1);
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    margin: 15px 0;
+
+}
+
+.progress-fill {
+
+    width: 0%;
+
+    height: 100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #ff4d6d,
+            #ffb703
+        );
+
+    transition:
+        width 2.5s ease;
+
+}
+
+
+/* =====================================================
+   الملاحظات
+===================================================== */
+
+.note-text {
+
+    color: #a0aab8;
+
+    font-size: .82rem;
+
+    line-height: 1.7;
+
+    margin-top: 18px;
+
+    padding-top: 12px;
+
+    border-top:
+        1px dashed
+        rgba(255,255,255,.15);
+
+}
+
+
+/* =====================================================
+   الهاتف
+===================================================== */
+
+@media(max-width:520px) {
 
     .container {
-      position: relative;
-      z-index: 10;
-      width: 92%;
-      max-width: 680px;
-      margin: 20px auto;
-      padding: 25px;
-      background: var(--card-bg);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid var(--border);
-      border-radius: 24px;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
-      text-align: center;
-    }
 
-    .step {
-      display: none;
-    }
+        width: 94%;
 
-    .step.active {
-      display: block;
-      animation: fadeIn 0.8s ease-in-out forwards;
-    }
+        padding: 18px;
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(15px);
-      }
+        margin: 15px auto;
 
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
     }
 
     .title-glow {
-      font-family: 'Amiri', serif;
-      font-size: 2.2rem;
-      color: #fff;
-      text-shadow: 0 0 15px rgba(255, 77, 109, 0.6);
-      margin-bottom: 10px;
-    }
 
-    .subtitle {
-      color: #b8c0ff;
-      font-size: 0.95rem;
-      margin-bottom: 25px;
-    }
+        font-size: 1.9rem;
 
-    .switch-box {
-      padding: 40px 20px;
-    }
-
-    .light-btn {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      background: linear-gradient(145deg, #ff4d6d, #800020);
-      border: 2px solid rgba(255,255,255,0.3);
-      color: #fff;
-      font-size: 2.5rem;
-      cursor: pointer;
-      box-shadow: 0 0 30px rgba(255, 77, 109, 0.5);
-      transition: all 0.3s ease;
-      margin: 20px auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .light-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 50px rgba(255, 77, 109, 0.8);
     }
 
     .counter-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin: 20px 0;
-    }
 
-    .counter-item {
-      background: rgba(255, 255, 255, 0.04);
-      padding: 12px 5px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.08);
+        gap: 6px;
+
     }
 
     .counter-value {
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: var(--gold);
-    }
 
-    .counter-label {
-      font-size: 0.75rem;
-      color: #ccc;
+        font-size: 1.1rem;
+
     }
 
     .story-card {
-      background: rgba(15, 12, 35, 0.6);
-      border-radius: 16px;
-      padding: 22px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      text-align: right;
-      line-height: 1.9;
-      font-size: 1.05rem;
-      color: #e2e8f0;
-      min-height: 220px;
-      box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
-    }
 
-    .quote-box {
-      border-right: 3px solid var(--gold);
-      padding-right: 12px;
-      margin: 15px 0;
-      font-family: 'Amiri', serif;
-      color: #ffe3a8;
-      font-style: italic;
-    }
+        font-size: .95rem;
 
-    .gallery-box,
-    .song-box {
-      margin: 10px 0;
-      text-align: center;
+        padding: 17px;
+
     }
 
     .gallery-frame {
-      position: relative;
-      width: 100%;
-      max-width: 320px;
-      height: 260px;
-      margin: 0 auto 15px;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 2px solid var(--gold);
-      box-shadow: 0 0 25px rgba(255, 183, 3, 0.4);
-      background: #110b29;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
 
-    .gallery-img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
+        height: 250px;
 
-    .gallery-caption {
-      font-size: 0.95rem;
-      color: #ffd166;
-      font-style: italic;
-      margin-bottom: 10px;
-      line-height: 1.6;
-    }
-
-    .song-card-frame {
-      background: rgba(255, 77, 109, 0.1);
-      border: 2px solid var(--secondary);
-      border-radius: 16px;
-      padding: 18px;
-      margin: 15px auto;
-      max-width: 400px;
-    }
-
-    .yt-link-btn {
-      display: inline-block;
-      background: #ff0000;
-      color: #fff;
-      padding: 8px 18px;
-      border-radius: 20px;
-      text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .note-text {
-      font-size: 0.85rem;
-      color: #a0aab8;
-      margin-top: 15px;
-      padding: 10px;
-      border-top: 1px dashed rgba(255, 255, 255, 0.15);
-      line-height: 1.6;
-    }
-
-    .btn {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: white;
-      border: none;
-      padding: 12px 30px;
-      border-radius: 50px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 20px;
-      box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
     }
 
     .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 15px;
+
+        flex-wrap: wrap;
+
     }
 
-    .btn-secondary {
-      background: transparent;
-      border: 1px solid rgba(255,255,255,0.3);
-      color: #ccc;
+}
+
+
+/* =====================================================
+   شاشة تحميل بسيطة
+===================================================== */
+
+#loading {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        #0b091a;
+
+    z-index: 5000;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    transition:
+        opacity .5s ease;
+
+}
+
+#loading.hide {
+
+    opacity: 0;
+
+    pointer-events: none;
+
+}
+
+.loader-heart {
+
+    font-size: 55px;
+
+    animation:
+        heartbeat 1s infinite;
+
+}
+
+@keyframes heartbeat {
+
+    0%,100% {
+        transform: scale(1);
     }
 
-    .gift-icon {
-      font-size: 80px;
-      cursor: pointer;
-      margin: 20px 0;
-      display: inline-block;
+    50% {
+        transform: scale(1.18);
     }
 
-    .progress-bar {
-      width: 100%;
-      height: 12px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 15px 0;
-    }
+}
 
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      background: linear-gradient(90deg, #ff4d6d, #ffb703);
-      transition: width 2.5s ease;
-    }
+</style>
 
-    @media (max-width: 500px) {
-      .container {
-        width: 94%;
-        padding: 18px;
-      }
-
-      .title-glow {
-        font-size: 1.9rem;
-      }
-
-      .counter-grid {
-        gap: 6px;
-      }
-
-      .counter-value {
-        font-size: 1.2rem;
-      }
-
-      .story-card {
-        padding: 18px;
-        font-size: 0.98rem;
-      }
-
-      .gallery-frame {
-        height: 240px;
-      }
-    }
-  </style>
 </head>
+
 
 <body>
 
-  <!-- الموسيقى الحالية مؤقتًا -->
-  <audio
+
+<!-- =====================================================
+     شاشة البداية أثناء تحميل الصفحة
+===================================================== -->
+
+<div id="loading">
+
+    <div class="loader-heart">
+        💕
+    </div>
+
+    <p style="margin-top:15px;color:#aaa">
+        لحظة واحدة...
+    </p>
+
+</div>
+
+
+<!-- =====================================================
+     الصوت
+===================================================== -->
+
+<audio
     id="bgMusic"
     loop
-    preload="none"
+    preload="auto"
     src="https://actions.google.com/sounds/v1/ambiences/warm_lake.ogg">
-  </audio>
+</audio>
 
-  <button
+
+<!-- =====================================================
+     زر الموسيقى
+===================================================== -->
+
+<button
     class="audio-control-btn"
     id="audioToggleBtn"
-    onclick="toggleAudio()">
+    type="button">
 
-    <span id="audioIcon">🎵</span>
-    <span id="audioText">إيقاف الموسيقى</span>
+    <span id="audioIcon">
+        🎵
+    </span>
 
-  </button>
+    <span id="audioText">
+        إيقاف الموسيقى
+    </span>
 
-  <div class="space-bg" id="spaceBg"></div>
+</button>
 
-  <div class="container">
 
-    <!-- ========================= -->
-    <!-- STEP 1 -->
-    <!-- ========================= -->
+<!-- =====================================================
+     الخلفية
+===================================================== -->
 
-    <div class="step active" id="step-1">
+<div
+    class="space-bg"
+    id="spaceBg">
+</div>
 
-      <div class="switch-box">
+
+<!-- =====================================================
+     الحاوية
+===================================================== -->
+
+<div class="container">
+
+
+<!-- =====================================================
+     الخطوة الأولى
+===================================================== -->
+
+<div
+    class="step active"
+    id="step-1">
+
+    <div class="switch-box">
 
         <h1 class="title-glow">
-          إلى نِداء قلبي.. 💕
+            إلى نِداء قلبي.. 💕
         </h1>
 
         <p class="subtitle">
-          كان المكان يلفه الظلام، حتى أشرقت أنتِ...
+            كان المكان يلفه الظلام، حتى أشرقت أنتِ...
         </p>
 
         <button
-          class="light-btn"
-          onclick="startExperience()">
-          💡
+            class="light-btn"
+            id="startButton"
+            type="button">
+
+            💡
+
         </button>
 
-        <p style="font-size: 0.85rem; color: #888; margin-top: 15px;">
-          إضغطي على المصباح لبدء الحكاية ✨
-        </p>
+        <p
+            style="
+                font-size:.85rem;
+                color:#888;
+                margin-top:15px;
+            ">
 
-      </div>
+            إضغطي على المصباح لبدء الحكاية ✨
+
+        </p>
 
     </div>
 
+</div>
 
-    <!-- ========================= -->
-    <!-- STEP 2 -->
-    <!-- ========================= -->
 
-    <div class="step" id="step-2">
+<!-- =====================================================
+     الخطوة الثانية
+===================================================== -->
 
-      <h2 class="title-glow" style="font-size: 1.8rem;">
+<div
+    class="step"
+    id="step-2">
+
+    <h2
+        class="title-glow"
+        style="font-size:1.8rem">
+
         13 أغسطس 2024 - 1:55 AM 💕
-      </h2>
 
-      <p class="subtitle">
+    </h2>
+
+    <p class="subtitle">
+
         لحظة الاعتراف الشجاعة التي غيّرت حياتي للأبد
-      </p>
+
+    </p>
 
 
-      <!-- العداد -->
+    <!-- العداد -->
 
-      <div class="counter-grid">
-
-        <div class="counter-item">
-          <div class="counter-value" id="days">0</div>
-          <div class="counter-label">يوم</div>
-        </div>
+    <div class="counter-grid">
 
         <div class="counter-item">
-          <div class="counter-value" id="hours">0</div>
-          <div class="counter-label">ساعة</div>
-        </div>
-
-        <div class="counter-item">
-          <div class="counter-value" id="minutes">0</div>
-          <div class="counter-label">دقيقة</div>
-        </div>
-
-        <div class="counter-item">
-          <div class="counter-value" id="seconds">0</div>
-          <div class="counter-label">ثانية</div>
-        </div>
-
-      </div>
-
-
-      <!-- محتوى القصة -->
-
-      <div
-        class="story-card"
-        id="storyContent">
-      </div>
-
-
-      <!-- أزرار التنقل -->
-
-      <div class="nav-buttons">
-
-        <button
-          class="btn btn-secondary"
-          id="prevBtn"
-          onclick="changeChapter(-1)">
-          السابق
-        </button>
-
-        <span
-          style="align-self: center; font-size: 0.85rem; color: #aaa;"
-          id="chapterNum">
-          1 / 6
-        </span>
-
-        <button
-          class="btn"
-          id="nextBtn"
-          onclick="changeChapter(1)">
-          التالي ✨
-        </button>
-
-      </div>
-
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- STEP 3 -->
-    <!-- ========================= -->
-
-    <div class="step" id="step-3">
-
-      <h2 class="title-glow">
-        🎁 هدية ندائي المتواضعة 🎁
-      </h2>
-
-      <p class="subtitle">
-        مهما قدمت لكِ، لن يوفيكِ حقكِ..
-        تقبلي هذا التعبير البسيط من قلبي
-      </p>
-
-      <div
-        class="gift-icon"
-        id="giftBox"
-        onclick="openFinalGift()">
-        🎁
-      </div>
-
-      <p
-        id="giftHint"
-        style="color: var(--gold);">
-        اضغطي على الصندوق لفتحه 🤍
-      </p>
-
-
-      <div
-        id="giftResult"
-        style="display: none; margin-top: 20px;">
-
-        <div
-          class="story-card"
-          style="text-align: center; border-color: var(--gold);">
-
-          <p style="font-size: 1.1rem; color: #fff; line-height: 2;">
-
-            في الختام..
-            أحبكِ ندائي،
-            وأتمنى في هذا اليوم أن تكوني في أتم الصحة والعافية،
-            وأن يجمعني الله بكِ في خير وعلى خير.
-
-            <br>
-
-            <strong
-              style="color: var(--gold); font-size: 1.2rem;">
-              وداعاً حبيبي 🤍
-            </strong>
-
-          </p>
-
-
-          <p
-            style="margin-top: 20px; font-size: 0.9rem; color: #ffb703;">
-            مستوى الحب الدائم 💕
-          </p>
-
-          <div class="progress-bar">
 
             <div
-              class="progress-fill"
-              id="loveFill">
+                class="counter-value"
+                id="days">
+
+                0
+
             </div>
 
-          </div>
-
-          <p
-            style="font-size: 1.8rem; margin-top: 15px;">
-            💐 🌹 🌸 🌺 🌷 🌻
-          </p>
-
-
-          <button
-            class="btn btn-secondary"
-            style="margin-top:20px;"
-            onclick="restartExperience()">
-            إعادة تشغيل الحكاية ↺
-          </button>
+            <div class="counter-label">
+                يوم
+            </div>
 
         </div>
 
-      </div>
+
+        <div class="counter-item">
+
+            <div
+                class="counter-value"
+                id="hours">
+
+                0
+
+            </div>
+
+            <div class="counter-label">
+                ساعة
+            </div>
+
+        </div>
+
+
+        <div class="counter-item">
+
+            <div
+                class="counter-value"
+                id="minutes">
+
+                0
+
+            </div>
+
+            <div class="counter-label">
+                دقيقة
+            </div>
+
+        </div>
+
+
+        <div class="counter-item">
+
+            <div
+                class="counter-value"
+                id="seconds">
+
+                0
+
+            </div>
+
+            <div class="counter-label">
+                ثانية
+            </div>
+
+        </div>
 
     </div>
 
-  </div>
+
+    <!-- محتوى الفصل -->
+
+    <div
+        class="story-card"
+        id="storyContent">
+    </div>
 
 
-  <script>
+    <!-- التنقل -->
 
-    /* ==========================================
-       الصور الحقيقية الموجودة داخل مجلد images
-       ========================================== */
+    <div class="nav-buttons">
 
-    const galleryImages = [
+        <button
+            class="btn btn-secondary"
+            id="prevBtn"
+            type="button">
 
-      {
-        url: "images/IMG-20250616-WA0009.jpg",
+            السابق
+
+        </button>
+
+
+        <span
+            style="
+                font-size:.85rem;
+                color:#aaa;
+            "
+            id="chapterNum">
+
+            1 / 6
+
+        </span>
+
+
+        <button
+            class="btn"
+            id="nextBtn"
+            type="button">
+
+            التالي ✨
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     الخطوة الثالثة - الهدية
+===================================================== -->
+
+<div
+    class="step"
+    id="step-3">
+
+    <h2 class="title-glow">
+
+        🎁 هدية ندائي المتواضعة 🎁
+
+    </h2>
+
+    <p class="subtitle">
+
+        مهما قدمت لكِ، لن يوفيكِ حقكِ..
+        تقبلي هذا التعبير البسيط من قلبي
+
+    </p>
+
+
+    <div
+        class="gift-icon"
+        id="giftBox">
+
+        🎁
+
+    </div>
+
+
+    <p
+        id="giftHint"
+        style="color:var(--gold)">
+
+        اضغطي على الصندوق لفتحه 🤍
+
+    </p>
+
+
+    <div
+        id="giftResult"
+        style="
+            display:none;
+            margin-top:20px;
+        ">
+
+        <div
+            class="story-card"
+            style="
+                text-align:center;
+                border-color:var(--gold);
+            ">
+
+            <p
+                style="
+                    font-size:1.1rem;
+                    color:#fff;
+                    line-height:2;
+                ">
+
+                في الختام.. أحبكِ ندائي،
+                وأتمنى في هذا اليوم أن تكوني
+                في أتم الصحة والعافية،
+                وأن يجمعني الله بكِ في خير وعلى خير.
+
+                <br>
+
+                <strong
+                    style="
+                        color:var(--gold);
+                        font-size:1.2rem;
+                    ">
+
+                    وداعاً حبيبي 🤍
+
+                </strong>
+
+            </p>
+
+
+            <p
+                style="
+                    margin-top:20px;
+                    font-size:.9rem;
+                    color:#ffb703;
+                ">
+
+                مستوى الحب الدائم 💕
+
+            </p>
+
+
+            <div class="progress-bar">
+
+                <div
+                    class="progress-fill"
+                    id="loveFill">
+                </div>
+
+            </div>
+
+
+            <p
+                style="
+                    font-size:1.8rem;
+                    margin-top:15px;
+                ">
+
+                💐 🌹 🌸 🌺 🌷 🌻
+
+            </p>
+
+
+            <button
+                class="btn btn-secondary"
+                id="restartBtn"
+                type="button">
+
+                إعادة تشغيل الحكاية ↺
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   الصور
+===================================================== */
+
+const galleryImages = [
+
+    {
+        url:
+        "images/IMG-20250108-WA0004.jpg",
 
         caption:
-          "اعذريني ولكني أحب هذه الصورة جداً وفوق ما تتصوري. 💕"
-      },
+        "أول صورة من ذكرياتنا... أحبها جداً جداً جداً ✨"
+    },
 
-      {
-        url: "images/IMG-20250108-WA0004.jpg",
+    {
+        url:
+        "images/IMG-20250616-WA0009.jpg",
 
         caption:
-          "أول صورة تجمعنا سوا... وأحبها جداً جداً جداً ✨"
-      }
+        "اعذريني ولكني أحب هذه الصورة جداً وفوق ما تتصوري. 💕"
+    }
 
-    ];
+];
 
 
-    /* ==========================================
-       الأغاني
-       ========================================== */
+/* =====================================================
+   الأغاني
+===================================================== */
 
-    const gallerySongs = [
+const gallerySongs = [
 
-      {
+    {
         title: "الأغنية الأولى 🎶",
 
         url:
-          "https://youtu.be/223R5N5t7es",
+        "https://youtu.be/223R5N5t7es",
 
         caption:
-          "هذه اغنيتنا الأولى أو اعتبرها اغنيتي الأولى معك، لأنني وبمجرد سماعها لا أستطيع التفكير الا بك فقط."
-      },
+        "هذه اغنيتنا الأولى أو اعتبرها اغنيتي الأولى معك، لأنني وبمجرد سماعها لا أستطيع التفكير إلا بك فقط."
+    },
 
-      {
+    {
         title: "أنت مامثلك عيون 🎵",
 
         url:
-          "https://youtu.be/Lf3HrxSgeE8",
+        "https://youtu.be/Lf3HrxSgeE8",
 
         caption:
-          "هو في مثلك؟ أنت مامثلك عيون"
-      },
+        "هو في مثلك؟ أنت مامثلك عيون"
+    },
 
-      {
+    {
         title: "باختياري 💕",
 
         url:
-          "https://youtu.be/dyPOITgFpEE",
+        "https://youtu.be/dyPOITgFpEE",
 
         caption:
-          "باختياري قلبي حبك باختيااااااري"
-      },
+        "باختياري قلبي حبك باختيااااااري"
+    },
 
-      {
+    {
         title: "يا بعد المسافة 🌹",
 
         url:
-          "https://youtu.be/zVfjCaDclp8",
+        "https://youtu.be/zVfjCaDclp8",
 
         caption:
-          "قصري بعد المسافة لا تطول وارحمي قلب يعذبه الحنين."
-      },
+        "قصري بعد المسافة لا تطول وارحمي قلب يعذبه الحنين."
+    },
 
-      {
+    {
         title: "تصدقي وإلا احلفلك ✨",
 
         url:
-          "https://youtu.be/UC9h35kyrC4",
+        "https://youtu.be/UC9h35kyrC4",
 
         caption:
-          "تصدقي وإلا احلفلك اني احبكطيب؟!!!"
-      },
+        "تصدقي وإلا احلفلك اني احبك طيب؟!!!"
+    },
 
-      {
+    {
         title: "يا عيونك 💖",
 
         url:
-          "https://youtu.be/h0T2iOZA-LI",
+        "https://youtu.be/h0T2iOZA-LI",
 
         caption:
-          "عيوووووووونك يااااااااااااااعيونك ياللي هي آخر امالي والله"
-      },
+        "عيوووووووونك يااااااااااااااعيونك ياللي هي آخر امالي والله"
+    },
 
-      {
+    {
         title: "عيونك لا توريها 🌸",
 
         url:
-          "https://youtu.be/nyk8GP12cPE",
+        "https://youtu.be/nyk8GP12cPE",
 
         caption:
-          "عيونك لا توريها ل غيري لا توريها!"
-      },
+        "عيونك لا توريها لغيري لا توريها!"
+    },
 
-      {
+    {
         title: "مثل الشروق 🌅",
 
         url:
-          "https://youtu.be/bci_-78aB0s",
+        "https://youtu.be/bci_-78aB0s",
 
         caption:
-          'نعم نعم انت "جيتني مثل الشروق اللي محى عتم الليالي.. جيت فرحه للحزين اللي من همومه هلك"'
-      }
-
-    ];
-
-
-    /* ==========================================
-       المتغيرات
-       ========================================== */
-
-    let currentImgIndex = 0;
-
-    let currentSongIndex = 0;
-
-    let isPlayingAudio = false;
-
-    let counterStarted = false;
-
-    let counterInterval = null;
-
-    let heartsCreated = false;
-
-
-    /* ==========================================
-       فصول القصة
-       ========================================== */
-
-    const chapters = [
-
-      `في مثل هذا اليوم ولد أحمد وأشرقت شمسه، كان أحمد يعيش في سراب يتخبطه يمنة ويسرة حتى ظهرتِ أنتِ.<br><br>
-
-       تعلم أحمد منكِ الكثير، بل وأكاد أجزم أن ما تعلمته منكِ كان أكثر مما تعلمته في مراحل دراستي، تعلمت أن أكون أحمد الحقيقي، تعلمت الحب، الاهتمام، الشعور، والإحساس.`,
-
-
-      `في مثل هذا اليوم وفي تمام الساعة 1:55 بعد منتصف الليل، كان أحمد في صراع بين قلبه وعقله، قلب يريد المجازفة والاعتراف، وعقل لا يقبل بالرفض، ضعيف، جبان، لا يحب المواجهة، لا يحب الاعتراف، يخشى أن يبوح بما في قلبه..<br><br>
-
-       نعم كان لا يرى سواكِ، ونعم كان لا ينبض إلا لكِ، ولكن كعادة أحمد سابقاً لم يستطع التغلب على خوفه ومهابة المجازفة. أتى هذا اليوم وهذا التاريخ، وبعد محاولات عدة، شد وجذب، رسالة تُحذف وكلام يُمحى، إقبال وتردد، قرر أحمد أن يبوح لكِ بما في قلبه.. تشجع واعترف لكِ بحبه الذي طالما كان ساكناً في قلبه لا يعلمه غيره، أحبكِ طيلة سنين وأعوام مع نفسه وظل صامتاً يراقب من بعيد، حتى أتى هذا اليوم.`,
-
-
-      `SPECIAL_GALLERY`,
-
-
-      `SPECIAL_SONGS`,
-
-
-      `طالما شبهتكِ بالسحر، حيث أنكِ جئتِ وغيرتِ أحمد وحياة أحمد من وإلى.. أعجز عن وصفكِ ووصف ما قمتِ به، كيف كان يعيش تلك الحياة البائسة والكئيبة، حياة ليس لها لون ولا طعم ولا رائحة حتى أتيتِ، كنتُ أعمى، جسداً بدون روح، أتيتِ أنتِ وبعثتِ الحياة لذلك الجسد، أحببتُ الحياة وأحببتُ نفسي، ولكن أحببتكِ أكثر.<br>
-
-      <div class="quote-box">
-
-        "طول عمري بخاف من الحب وسيرة الحب..
-        وقابلتك انت لقيتك بتغير كل حياتي..
-        ما أعرفش إزاي حبيتك ما أعرفش إزاي ياحياتي..
-        من همسة حب لقيتني باحب وأدوب في الحب
-        وصبح وليل علي بابه."
-
-      </div>`,
-
-
-      `وأخيراً وليس آخراً، أريد أن أستغل هذا اليوم وهذه اللحظة لأقول لكِ:
-
-      <div class="quote-box">
-
-        "ياما عيون شاغلوني لكن ولا شغلوني..
-        إلا عيونك انت دول بس اللي خدوني وبحبك أمروني."
-
-      </div>
-
-      أحبكِ في الأمس وأحبكِ اليوم وغداً وحتى الممات،
-      سأظل أحبكِ طالما هذا الجسد لا يزال يتنفس 💕`
-
-    ];
-
-
-    let currentChapter = 0;
-
-
-    /* ==========================================
-       بدء التجربة
-       ========================================== */
-
-    function startExperience() {
-
-      document
-        .getElementById('step-1')
-        .classList.remove('active');
-
-      document
-        .getElementById('step-1')
-        .style.display = 'none';
-
-
-      const step2 =
-        document.getElementById('step-2');
-
-
-      step2.style.display = 'block';
-
-      step2.classList.add('active');
-
-
-      renderChapter();
-
-
-      startLiveCounter();
-
-
-      createFloatingHearts();
-
-
-      const music =
-        document.getElementById('bgMusic');
-
-
-      const toggleBtn =
-        document.getElementById('audioToggleBtn');
-
-
-      toggleBtn.style.display = 'flex';
-
-
-      try {
-
-        const playPromise = music.play();
-
-
-        if (playPromise !== undefined) {
-
-          playPromise
-
-            .then(() => {
-
-              isPlayingAudio = true;
-
-              document.getElementById('audioIcon')
-                .textContent = '🎵';
-
-              document.getElementById('audioText')
-                .textContent = 'إيقاف الموسيقى';
-
-            })
-
-            .catch(() => {
-
-              console.log(
-                "Audio play blocked, user can click button"
-              );
-
-              isPlayingAudio = false;
-
-              document.getElementById('audioIcon')
-                .textContent = '🔇';
-
-              document.getElementById('audioText')
-                .textContent = 'تشغيل الموسيقى';
-
-            });
-
-        }
-
-      } catch (e) {
-
-        console.log("Audio init error ignored");
-
-      }
-
-    }
-
-
-    /* ==========================================
-       تشغيل / إيقاف الموسيقى
-       ========================================== */
-
-    function toggleAudio() {
-
-      const music =
-        document.getElementById('bgMusic');
-
-      const icon =
-        document.getElementById('audioIcon');
-
-      const text =
-        document.getElementById('audioText');
-
-
-      if (isPlayingAudio) {
-
-        music.pause();
-
-        isPlayingAudio = false;
-
-        icon.textContent = '🔇';
-
-        text.textContent = 'تشغيل الموسيقى';
-
-      } else {
-
-        music.play()
-
-          .then(() => {
-
-            isPlayingAudio = true;
-
-            icon.textContent = '🎵';
-
-            text.textContent = 'إيقاف الموسيقى';
-
-          })
-
-          .catch(() => {
-
-            console.log("Audio play failed");
-
-          });
-
-      }
-
-    }
-
-
-    /* ==========================================
-       الانتقال بين الشاشات
-       ========================================== */
-
-    function showStep(stepNum) {
-
-      document
-        .querySelectorAll('.step')
-        .forEach(s => {
-
-          s.style.display = 'none';
-
-          s.classList.remove('active');
-
-        });
-
-
-      const target =
-        document.getElementById(`step-${stepNum}`);
-
-
-      target.style.display = 'block';
-
-      target.classList.add('active');
-
-    }
-
-
-    /* ==========================================
-       عرض الفصل الحالي
-       ========================================== */
-
-    function renderChapter() {
-
-      const storyCard =
-        document.getElementById('storyContent');
-
-
-      if (chapters[currentChapter] === 'SPECIAL_GALLERY') {
-
-        
+        "نعم نعم انت جيتني مثل الش
