@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>إلى ندائي 💕 | 13/8/2024</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;800&display=swap" rel="stylesheet">
+
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-  
+
   <style>
     :root {
       --primary: #ff4d6d;
@@ -17,7 +20,12 @@
       --border: rgba(255, 255, 255, 0.12);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Cairo', sans-serif;
+    }
 
     body {
       background-color: var(--bg-dark);
@@ -51,7 +59,10 @@
 
     .space-bg {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       z-index: 0;
       pointer-events: none;
       background: radial-gradient(circle at 50% 30%, #1a0933 0%, #080411 100%);
@@ -65,9 +76,19 @@
     }
 
     @keyframes floatUp {
-      0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
-      50% { opacity: 0.8; }
-      100% { transform: translateY(-10vh) scale(1.2) rotate(360deg); opacity: 0; }
+      0% {
+        transform: translateY(100vh) scale(0.5) rotate(0deg);
+        opacity: 0;
+      }
+
+      50% {
+        opacity: 0.8;
+      }
+
+      100% {
+        transform: translateY(-10vh) scale(1.2) rotate(360deg);
+        opacity: 0;
+      }
     }
 
     .container {
@@ -86,12 +107,25 @@
       text-align: center;
     }
 
-    .step { display: none; }
-    .step.active { display: block; animation: fadeIn 0.8s ease-in-out forwards; }
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+      animation: fadeIn 0.8s ease-in-out forwards;
+    }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(15px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     .title-glow {
@@ -102,9 +136,15 @@
       margin-bottom: 10px;
     }
 
-    .subtitle { color: #b8c0ff; font-size: 0.95rem; margin-bottom: 25px; }
+    .subtitle {
+      color: #b8c0ff;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+    }
 
-    .switch-box { padding: 40px 20px; }
+    .switch-box {
+      padding: 40px 20px;
+    }
 
     .light-btn {
       width: 100px;
@@ -142,8 +182,16 @@
       border: 1px solid rgba(255,255,255,0.08);
     }
 
-    .counter-value { font-size: 1.4rem; font-weight: 700; color: var(--gold); }
-    .counter-label { font-size: 0.75rem; color: #ccc; }
+    .counter-value {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .counter-label {
+      font-size: 0.75rem;
+      color: #ccc;
+    }
 
     .story-card {
       background: rgba(15, 12, 35, 0.6);
@@ -167,7 +215,11 @@
       font-style: italic;
     }
 
-    .gallery-box, .song-box { margin: 10px 0; text-align: center; }
+    .gallery-box,
+    .song-box {
+      margin: 10px 0;
+      text-align: center;
+    }
 
     .gallery-frame {
       position: relative;
@@ -185,8 +237,20 @@
       justify-content: center;
     }
 
-    .gallery-img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .gallery-caption { font-size: 0.95rem; color: #ffd166; font-style: italic; margin-bottom: 10px; line-height: 1.6; }
+    .gallery-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-caption {
+      font-size: 0.95rem;
+      color: #ffd166;
+      font-style: italic;
+      margin-bottom: 10px;
+      line-height: 1.6;
+    }
 
     .song-card-frame {
       background: rgba(255, 77, 109, 0.1);
@@ -231,301 +295,660 @@
       box-shadow: 0 4px 15px rgba(255, 77, 109, 0.4);
     }
 
-    .nav-buttons { display: flex; justify-content: space-between; margin-top: 15px; }
-    .btn-secondary { background: transparent; border: 1px solid rgba(255,255,255,0.3); color: #ccc; }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+    }
 
-    .gift-icon { font-size: 80px; cursor: pointer; margin: 20px 0; display: inline-block; }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.3);
+      color: #ccc;
+    }
 
-    .progress-bar { width: 100%; height: 12px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; margin: 15px 0; }
-    .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #ff4d6d, #ffb703); transition: width 2.5s ease; }
+    .gift-icon {
+      font-size: 80px;
+      cursor: pointer;
+      margin: 20px 0;
+      display: inline-block;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 12px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 15px 0;
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff4d6d, #ffb703);
+      transition: width 2.5s ease;
+    }
+
+    @media (max-width: 500px) {
+      .container {
+        width: 94%;
+        padding: 18px;
+      }
+
+      .title-glow {
+        font-size: 1.9rem;
+      }
+
+      .counter-grid {
+        gap: 6px;
+      }
+
+      .counter-value {
+        font-size: 1.2rem;
+      }
+
+      .story-card {
+        padding: 18px;
+        font-size: 0.98rem;
+      }
+
+      .gallery-frame {
+        height: 240px;
+      }
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- ملف الصوت المباشر الموسيقي في الخلفية -->
-  <audio id="bgMusic" loop preload="none" src="https://actions.google.com/sounds/v1/ambiences/warm_lake.ogg"></audio>
-  
-  <button class="audio-control-btn" id="audioToggleBtn" onclick="toggleAudio()">
-    <span id="audioIcon">🎵</span> <span id="audioText">إيقاف الموسيقى</span>
+  <!-- الموسيقى الحالية مؤقتًا -->
+  <audio
+    id="bgMusic"
+    loop
+    preload="none"
+    src="https://actions.google.com/sounds/v1/ambiences/warm_lake.ogg">
+  </audio>
+
+  <button
+    class="audio-control-btn"
+    id="audioToggleBtn"
+    onclick="toggleAudio()">
+
+    <span id="audioIcon">🎵</span>
+    <span id="audioText">إيقاف الموسيقى</span>
+
   </button>
 
   <div class="space-bg" id="spaceBg"></div>
 
   <div class="container">
 
-    <!-- Step 1: البداية -->
+    <!-- ========================= -->
+    <!-- STEP 1 -->
+    <!-- ========================= -->
+
     <div class="step active" id="step-1">
+
       <div class="switch-box">
-        <h1 class="title-glow">إلى نِداء قلبي.. 💕</h1>
-        <p class="subtitle">كان المكان يلفه الظلام، حتى أشرقت أنتِ...</p>
-        <button class="light-btn" onclick="startExperience()">💡</button>
-        <p style="font-size: 0.85rem; color: #888; margin-top: 15px;">إضغطي على المصباح لبدء الحكاية ✨</p>
+
+        <h1 class="title-glow">
+          إلى نِداء قلبي.. 💕
+        </h1>
+
+        <p class="subtitle">
+          كان المكان يلفه الظلام، حتى أشرقت أنتِ...
+        </p>
+
+        <button
+          class="light-btn"
+          onclick="startExperience()">
+          💡
+        </button>
+
+        <p style="font-size: 0.85rem; color: #888; margin-top: 15px;">
+          إضغطي على المصباح لبدء الحكاية ✨
+        </p>
+
       </div>
+
     </div>
 
-    <!-- Step 2: القصة والصور والأغاني -->
+
+    <!-- ========================= -->
+    <!-- STEP 2 -->
+    <!-- ========================= -->
+
     <div class="step" id="step-2">
-      <h2 class="title-glow" style="font-size: 1.8rem;">13 أغسطس 2024 - 1:55 AM 💕</h2>
-      <p class="subtitle">لحظة الاعتراف الشجاعة التي غيّرت حياتي للأبد</p>
+
+      <h2 class="title-glow" style="font-size: 1.8rem;">
+        13 أغسطس 2024 - 1:55 AM 💕
+      </h2>
+
+      <p class="subtitle">
+        لحظة الاعتراف الشجاعة التي غيّرت حياتي للأبد
+      </p>
+
+
+      <!-- العداد -->
 
       <div class="counter-grid">
-        <div class="counter-item"><div class="counter-value" id="days">0</div><div class="counter-label">يوم</div></div>
-        <div class="counter-item"><div class="counter-value" id="hours">0</div><div class="counter-label">ساعة</div></div>
-        <div class="counter-item"><div class="counter-value" id="minutes">0</div><div class="counter-label">دقيقة</div></div>
-        <div class="counter-item"><div class="counter-value" id="seconds">0</div><div class="counter-label">ثانية</div></div>
+
+        <div class="counter-item">
+          <div class="counter-value" id="days">0</div>
+          <div class="counter-label">يوم</div>
+        </div>
+
+        <div class="counter-item">
+          <div class="counter-value" id="hours">0</div>
+          <div class="counter-label">ساعة</div>
+        </div>
+
+        <div class="counter-item">
+          <div class="counter-value" id="minutes">0</div>
+          <div class="counter-label">دقيقة</div>
+        </div>
+
+        <div class="counter-item">
+          <div class="counter-value" id="seconds">0</div>
+          <div class="counter-label">ثانية</div>
+        </div>
+
       </div>
 
-      <div class="story-card" id="storyContent"></div>
+
+      <!-- محتوى القصة -->
+
+      <div
+        class="story-card"
+        id="storyContent">
+      </div>
+
+
+      <!-- أزرار التنقل -->
 
       <div class="nav-buttons">
-        <button class="btn btn-secondary" id="prevBtn" onclick="changeChapter(-1)">السابق</button>
-        <span style="align-self: center; font-size: 0.85rem; color: #aaa;" id="chapterNum">1 / 6</span>
-        <button class="btn" id="nextBtn" onclick="changeChapter(1)">التالي ✨</button>
+
+        <button
+          class="btn btn-secondary"
+          id="prevBtn"
+          onclick="changeChapter(-1)">
+          السابق
+        </button>
+
+        <span
+          style="align-self: center; font-size: 0.85rem; color: #aaa;"
+          id="chapterNum">
+          1 / 6
+        </span>
+
+        <button
+          class="btn"
+          id="nextBtn"
+          onclick="changeChapter(1)">
+          التالي ✨
+        </button>
+
       </div>
+
     </div>
 
-    <!-- Step 3: الهدية والختام -->
+
+    <!-- ========================= -->
+    <!-- STEP 3 -->
+    <!-- ========================= -->
+
     <div class="step" id="step-3">
-      <h2 class="title-glow">🎁 هدية ندائي المتواضعة 🎁</h2>
-      <p class="subtitle">مهما قدمت لكِ، لن يوفيكِ حقكِ.. تقبلي هذا التعبير البسيط من قلبي</p>
 
-      <div class="gift-icon" id="giftBox" onclick="openFinalGift()">🎁</div>
-      <p id="giftHint" style="color: var(--gold);">اضغطي على الصندوق لفتحه 🤍</p>
+      <h2 class="title-glow">
+        🎁 هدية ندائي المتواضعة 🎁
+      </h2>
 
-      <div id="giftResult" style="display: none; margin-top: 20px;">
-        <div class="story-card" style="text-align: center; border-color: var(--gold);">
+      <p class="subtitle">
+        مهما قدمت لكِ، لن يوفيكِ حقكِ..
+        تقبلي هذا التعبير البسيط من قلبي
+      </p>
+
+      <div
+        class="gift-icon"
+        id="giftBox"
+        onclick="openFinalGift()">
+        🎁
+      </div>
+
+      <p
+        id="giftHint"
+        style="color: var(--gold);">
+        اضغطي على الصندوق لفتحه 🤍
+      </p>
+
+
+      <div
+        id="giftResult"
+        style="display: none; margin-top: 20px;">
+
+        <div
+          class="story-card"
+          style="text-align: center; border-color: var(--gold);">
+
           <p style="font-size: 1.1rem; color: #fff; line-height: 2;">
-            في الختام.. أحبكِ ندائي، وأتمنى في هذا اليوم أن تكوني في أتم الصحة والعافية، وأن يجمعني الله بكِ في خير وعلى خير.<br>
-            <strong style="color: var(--gold); font-size: 1.2rem;">وداعاً حبيبي 🤍</strong>
+
+            في الختام..
+            أحبكِ ندائي،
+            وأتمنى في هذا اليوم أن تكوني في أتم الصحة والعافية،
+            وأن يجمعني الله بكِ في خير وعلى خير.
+
+            <br>
+
+            <strong
+              style="color: var(--gold); font-size: 1.2rem;">
+              وداعاً حبيبي 🤍
+            </strong>
+
           </p>
 
-          <p style="margin-top: 20px; font-size: 0.9rem; color: #ffb703;">مستوى الحب الدائم 💕</p>
-          <div class="progress-bar"><div class="progress-fill" id="loveFill"></div></div>
-          <p style="font-size: 1.8rem; margin-top: 15px;">💐 🌹 🌸 🌺 🌷 🌻</p>
 
-          <button class="btn btn-secondary" style="margin-top:20px;" onclick="restartExperience()">إعادة تشغيل الحكاية ↺</button>
+          <p
+            style="margin-top: 20px; font-size: 0.9rem; color: #ffb703;">
+            مستوى الحب الدائم 💕
+          </p>
+
+          <div class="progress-bar">
+
+            <div
+              class="progress-fill"
+              id="loveFill">
+            </div>
+
+          </div>
+
+          <p
+            style="font-size: 1.8rem; margin-top: 15px;">
+            💐 🌹 🌸 🌺 🌷 🌻
+          </p>
+
+
+          <button
+            class="btn btn-secondary"
+            style="margin-top:20px;"
+            onclick="restartExperience()">
+            إعادة تشغيل الحكاية ↺
+          </button>
+
         </div>
+
       </div>
+
     </div>
 
   </div>
 
+
   <script>
-    // صور مدمجة داخل الكود بتصاميم رومانسية معبرة
+
+    /* ==========================================
+       الصور الحقيقية الموجودة داخل مجلد images
+       ========================================== */
+
     const galleryImages = [
-      { 
-        url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%232b092b'/><circle cx='200' cy='130' r='70' fill='%23ff4d6d' opacity='0.3'/><path d='M200 210 C200 210 130 150 130 110 A40 40 0 0 1 200 85 A40 40 0 0 1 270 110 C270 150 200 210 200 210 Z' fill='%23ff4d6d'/><text x='50%' y='260' font-family='sans-serif' font-size='18' fill='%23ffb703' text-anchor='middle'>ذكرياتنا الجميلة 💕</text></svg>", 
-        caption: "اعذريني ولكني أحب هذه الصورة جداً وفوق ماتتصوري. 💕" 
+
+      {
+        url: "images/IMG-20250616-WA0009.jpg",
+
+        caption:
+          "اعذريني ولكني أحب هذه الصورة جداً وفوق ما تتصوري. 💕"
       },
-      { 
-        url: "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'><rect width='100%' height='100%' fill='%230f172a'/><polygon points='200,40 240,140 340,140 260,200 290,300 200,240 110,300 140,200 60,140 160,140' fill='%23ffb703' opacity='0.8'/><text x='50%' y='160' font-family='sans-serif' font-size='20' fill='%23ffffff' text-anchor='middle'>أول لحظة تجمعنا ✨</text></svg>", 
-        caption: "اول صورة تجمعنا سوا ولو انها مش حقيقية ولكن احبها جداً جداً جداً ✨" 
+
+      {
+        url: "images/IMG-20250108-WA0004.jpg",
+
+        caption:
+          "أول صورة تجمعنا سوا... وأحبها جداً جداً جداً ✨"
       }
+
     ];
+
+
+    /* ==========================================
+       الأغاني
+       ========================================== */
 
     const gallerySongs = [
-      { title: "الأغنية الأولى 🎶", url: "https://youtu.be/223R5N5t7es?si=IqmwZR4iPm6cqaAt", caption: "هذه اغنيتنا الأولى أو اعتبرها اغنيتي الأولى معك، لأنني وبمجرد سماعها لا أستطيع التفكير الا بك فقط." },
-      { title: "أنت مامثلك عيون 🎵", url: "https://youtu.be/Lf3HrxSgeE8?si=a-XcYzh6FnaPgx1M", caption: "هو في مثلك؟ أنت مامثلك عيون" },
-      { title: "باختياري 💕", url: "https://youtu.be/dyPOITgFpEE?si=ABJ4l5ZreIGTHBVK", caption: "باختياري قلبي حبك باختيااااااري" },
-      { title: "يا بعد المسافة 🌹", url: "https://youtu.be/zVfjCaDclp8?si=-FSUr1cwH7iGLJ_k", caption: "قصري بعد المسافة لا تطول وارحمي قلب يعذبه الحنين." },
-      { title: "تصدقي وإلا احلفلك ✨", url: "https://youtu.be/UC9h35kyrC4?si=QKCHsZC4ehB-3Rrk", caption: "تصدقي وإلا احلفلك اني احبكطيب؟!!!" },
-      { title: "يا عيونك 💖", url: "https://youtu.be/h0T2iOZA-LI?si=LNOOchV2a-hc97wK", caption: "عيوووووووونك يااااااااااااااعيونك ياللي هي آخر امالي والله" },
-      { title: "عيونك لا توريها 🌸", url: "https://youtu.be/nyk8GP12cPE?si=c5d5yFadOT3jPJLg", caption: "عيونك لا توريها ل غيري لا توريها!" },
-      { title: "مثل الشروق 🌅", url: "https://youtu.be/bci_-78aB0s?si=IIPfNDhHE-g5Vyny", caption: "نعم نعم انت \"جيتني مثل الشروق اللي محى عتم الليالي.. جيت فرحه للحزين اللي من همومه هلك\"" }
+
+      {
+        title: "الأغنية الأولى 🎶",
+
+        url:
+          "https://youtu.be/223R5N5t7es",
+
+        caption:
+          "هذه اغنيتنا الأولى أو اعتبرها اغنيتي الأولى معك، لأنني وبمجرد سماعها لا أستطيع التفكير الا بك فقط."
+      },
+
+      {
+        title: "أنت مامثلك عيون 🎵",
+
+        url:
+          "https://youtu.be/Lf3HrxSgeE8",
+
+        caption:
+          "هو في مثلك؟ أنت مامثلك عيون"
+      },
+
+      {
+        title: "باختياري 💕",
+
+        url:
+          "https://youtu.be/dyPOITgFpEE",
+
+        caption:
+          "باختياري قلبي حبك باختيااااااري"
+      },
+
+      {
+        title: "يا بعد المسافة 🌹",
+
+        url:
+          "https://youtu.be/zVfjCaDclp8",
+
+        caption:
+          "قصري بعد المسافة لا تطول وارحمي قلب يعذبه الحنين."
+      },
+
+      {
+        title: "تصدقي وإلا احلفلك ✨",
+
+        url:
+          "https://youtu.be/UC9h35kyrC4",
+
+        caption:
+          "تصدقي وإلا احلفلك اني احبكطيب؟!!!"
+      },
+
+      {
+        title: "يا عيونك 💖",
+
+        url:
+          "https://youtu.be/h0T2iOZA-LI",
+
+        caption:
+          "عيوووووووونك يااااااااااااااعيونك ياللي هي آخر امالي والله"
+      },
+
+      {
+        title: "عيونك لا توريها 🌸",
+
+        url:
+          "https://youtu.be/nyk8GP12cPE",
+
+        caption:
+          "عيونك لا توريها ل غيري لا توريها!"
+      },
+
+      {
+        title: "مثل الشروق 🌅",
+
+        url:
+          "https://youtu.be/bci_-78aB0s",
+
+        caption:
+          'نعم نعم انت "جيتني مثل الشروق اللي محى عتم الليالي.. جيت فرحه للحزين اللي من همومه هلك"'
+      }
+
     ];
+
+
+    /* ==========================================
+       المتغيرات
+       ========================================== */
 
     let currentImgIndex = 0;
+
     let currentSongIndex = 0;
+
     let isPlayingAudio = false;
 
+    let counterStarted = false;
+
+    let counterInterval = null;
+
+    let heartsCreated = false;
+
+
+    /* ==========================================
+       فصول القصة
+       ========================================== */
+
     const chapters = [
+
       `في مثل هذا اليوم ولد أحمد وأشرقت شمسه، كان أحمد يعيش في سراب يتخبطه يمنة ويسرة حتى ظهرتِ أنتِ.<br><br>
+
        تعلم أحمد منكِ الكثير، بل وأكاد أجزم أن ما تعلمته منكِ كان أكثر مما تعلمته في مراحل دراستي، تعلمت أن أكون أحمد الحقيقي، تعلمت الحب، الاهتمام، الشعور، والإحساس.`,
 
+
       `في مثل هذا اليوم وفي تمام الساعة 1:55 بعد منتصف الليل، كان أحمد في صراع بين قلبه وعقله، قلب يريد المجازفة والاعتراف، وعقل لا يقبل بالرفض، ضعيف، جبان، لا يحب المواجهة، لا يحب الاعتراف، يخشى أن يبوح بما في قلبه..<br><br>
+
        نعم كان لا يرى سواكِ، ونعم كان لا ينبض إلا لكِ، ولكن كعادة أحمد سابقاً لم يستطع التغلب على خوفه ومهابة المجازفة. أتى هذا اليوم وهذا التاريخ، وبعد محاولات عدة، شد وجذب، رسالة تُحذف وكلام يُمحى، إقبال وتردد، قرر أحمد أن يبوح لكِ بما في قلبه.. تشجع واعترف لكِ بحبه الذي طالما كان ساكناً في قلبه لا يعلمه غيره، أحبكِ طيلة سنين وأعوام مع نفسه وظل صامتاً يراقب من بعيد، حتى أتى هذا اليوم.`,
 
+
       `SPECIAL_GALLERY`,
+
+
       `SPECIAL_SONGS`,
 
+
       `طالما شبهتكِ بالسحر، حيث أنكِ جئتِ وغيرتِ أحمد وحياة أحمد من وإلى.. أعجز عن وصفكِ ووصف ما قمتِ به، كيف كان يعيش تلك الحياة البائسة والكئيبة، حياة ليس لها لون ولا طعم ولا رائحة حتى أتيتِ، كنتُ أعمى، جسداً بدون روح، أتيتِ أنتِ وبعثتِ الحياة لذلك الجسد، أحببتُ الحياة وأحببتُ نفسي، ولكن أحببتكِ أكثر.<br>
+
       <div class="quote-box">
-        "طول عمري بخاف من الحب وسيرة الحب.. وقابلتك انت لقيتك بتغير كل حياتي.. ما أعرفش إزاي حبيتك ما أعرفش إزاي ياحياتي.. من همسة حب لقيتني باحب وأدوب في الحب وصبح وليل علي بابه."
+
+        "طول عمري بخاف من الحب وسيرة الحب..
+        وقابلتك انت لقيتك بتغير كل حياتي..
+        ما أعرفش إزاي حبيتك ما أعرفش إزاي ياحياتي..
+        من همسة حب لقيتني باحب وأدوب في الحب
+        وصبح وليل علي بابه."
+
       </div>`,
 
+
       `وأخيراً وليس آخراً، أريد أن أستغل هذا اليوم وهذه اللحظة لأقول لكِ:
+
       <div class="quote-box">
-        "ياما عيون شاغلوني لكن ولا شغلوني.. إلا عيونك انت دول بس اللي خدوني وبحبك أمروني."
+
+        "ياما عيون شاغلوني لكن ولا شغلوني..
+        إلا عيونك انت دول بس اللي خدوني وبحبك أمروني."
+
       </div>
-      أحبكِ في الأمس وأحبكِ اليوم وغداً وحتى الممات، سأظل أحبكِ طالما هذا الجسد لا يزال يتنفس 💕`
+
+      أحبكِ في الأمس وأحبكِ اليوم وغداً وحتى الممات،
+      سأظل أحبكِ طالما هذا الجسد لا يزال يتنفس 💕`
+
     ];
+
 
     let currentChapter = 0;
 
+
+    /* ==========================================
+       بدء التجربة
+       ========================================== */
+
     function startExperience() {
-      // إخفاء الخطوة الأولى وإظهار الخطوة الثانية فوراً
-      document.getElementById('step-1').classList.remove('active');
-      document.getElementById('step-1').style.display = 'none';
-      
-      const step2 = document.getElementById('step-2');
+
+      document
+        .getElementById('step-1')
+        .classList.remove('active');
+
+      document
+        .getElementById('step-1')
+        .style.display = 'none';
+
+
+      const step2 =
+        document.getElementById('step-2');
+
+
       step2.style.display = 'block';
+
       step2.classList.add('active');
 
+
       renderChapter();
+
+
       startLiveCounter();
+
+
       createFloatingHearts();
 
-      // محاولة تشغيل الصوت بأمان
-      const music = document.getElementById('bgMusic');
-      const toggleBtn = document.getElementById('audioToggleBtn');
+
+      const music =
+        document.getElementById('bgMusic');
+
+
+      const toggleBtn =
+        document.getElementById('audioToggleBtn');
+
+
       toggleBtn.style.display = 'flex';
 
+
       try {
-        let playPromise = music.play();
+
+        const playPromise = music.play();
+
+
         if (playPromise !== undefined) {
-          playPromise.then(() => {
-            isPlayingAudio = true;
-          }).catch(err => {
-            console.log("Audio play blocked, user can click button");
-            isPlayingAudio = false;
-            document.getElementById('audioIcon').textContent = '🔇';
-            document.getElementById('audioText').textContent = 'تشغيل الموسيقى';
-          });
+
+          playPromise
+
+            .then(() => {
+
+              isPlayingAudio = true;
+
+              document.getElementById('audioIcon')
+                .textContent = '🎵';
+
+              document.getElementById('audioText')
+                .textContent = 'إيقاف الموسيقى';
+
+            })
+
+            .catch(() => {
+
+              console.log(
+                "Audio play blocked, user can click button"
+              );
+
+              isPlayingAudio = false;
+
+              document.getElementById('audioIcon')
+                .textContent = '🔇';
+
+              document.getElementById('audioText')
+                .textContent = 'تشغيل الموسيقى';
+
+            });
+
         }
+
       } catch (e) {
+
         console.log("Audio init error ignored");
+
       }
+
     }
+
+
+    /* ==========================================
+       تشغيل / إيقاف الموسيقى
+       ========================================== */
 
     function toggleAudio() {
-      const music = document.getElementById('bgMusic');
-      const icon = document.getElementById('audioIcon');
-      const text = document.getElementById('audioText');
+
+      const music =
+        document.getElementById('bgMusic');
+
+      const icon =
+        document.getElementById('audioIcon');
+
+      const text =
+        document.getElementById('audioText');
+
 
       if (isPlayingAudio) {
+
         music.pause();
+
         isPlayingAudio = false;
+
         icon.textContent = '🔇';
+
         text.textContent = 'تشغيل الموسيقى';
+
       } else {
-        music.play().then(() => {
-          isPlayingAudio = true;
-          icon.textContent = '🎵';
-          text.textContent = 'إيقاف الموسيقى';
-        }).catch(e => console.log(e));
+
+        music.play()
+
+          .then(() => {
+
+            isPlayingAudio = true;
+
+            icon.textContent = '🎵';
+
+            text.textContent = 'إيقاف الموسيقى';
+
+          })
+
+          .catch(() => {
+
+            console.log("Audio play failed");
+
+          });
+
       }
+
     }
+
+
+    /* ==========================================
+       الانتقال بين الشاشات
+       ========================================== */
 
     function showStep(stepNum) {
-      document.querySelectorAll('.step').forEach(s => {
-        s.style.display = 'none';
-        s.classList.remove('active');
-      });
-      const target = document.getElementById(`step-${stepNum}`);
+
+      document
+        .querySelectorAll('.step')
+        .forEach(s => {
+
+          s.style.display = 'none';
+
+          s.classList.remove('active');
+
+        });
+
+
+      const target =
+        document.getElementById(`step-${stepNum}`);
+
+
       target.style.display = 'block';
+
       target.classList.add('active');
+
     }
+
+
+    /* ==========================================
+       عرض الفصل الحالي
+       ========================================== */
 
     function renderChapter() {
-      const storyCard = document.getElementById('storyContent');
+
+      const storyCard =
+        document.getElementById('storyContent');
+
 
       if (chapters[currentChapter] === 'SPECIAL_GALLERY') {
-        storyCard.innerHTML = `
-          <div class="gallery-box">
-            <h3 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 12px;">معرض ذكرياتنا 💕</h3>
-            <div class="gallery-frame">
-              <img id="gImg" src="${galleryImages[currentImgIndex].url}" class="gallery-img">
-            </div>
-            <p id="gCaption" class="gallery-caption">${galleryImages[currentImgIndex].caption}</p>
-            <button class="btn btn-secondary" style="font-size:0.8rem; padding: 6px 15px;" onclick="nextGalleryImage()">الصورة التالية 📸</button>
-            <p class="note-text">
-              أعتذر ولكن ليس لدي صور لك كثيرا، فقط هاتين الصورتين هما ما في جعبتي ولا املك غيرهم، عندما امتلك صور اكثر ساضيفهم هنا لاحقا🤍
-            </p>
-          </div>
-        `;
-      } else if (chapters[currentChapter] === 'SPECIAL_SONGS') {
-        storyCard.innerHTML = `
-          <div class="song-box">
-            <h3 style="color: var(--gold); font-size: 1.1rem; margin-bottom: 10px;">معرض أغانيكِ المفضلة 🎵</h3>
-            <div class="song-card-frame">
-              <h4 id="songTitle" style="color: var(--gold); margin-bottom: 8px;">${gallerySongs[currentSongIndex].title}</h4>
-              <p id="songCaption" class="gallery-caption" style="font-size: 0.95rem; color: #fff;">"${gallerySongs[currentSongIndex].caption}"</p>
-              <a id="songLink" href="${gallerySongs[currentSongIndex].url}" target="_blank" class="yt-link-btn">▶ الاستماع للأغنية عبر يوتيوب</a>
-            </div>
-            <button class="btn btn-secondary" style="font-size:0.8rem; padding: 6px 15px;" onclick="nextSong()">الأغنية التالية 🎧 (${currentSongIndex + 1}/8)</button>
-            <p class="note-text">
-              هذه نبذه وغيض من فيض ومن بحر الأغاني التي تذكرني بك، هنالك الكثير والكثير ولكن احببت ان انتقي لك بعض منها فقط، احبك ندائي.🤍
-            </p>
-          </div>
-        `;
-      } else {
-        storyCard.innerHTML = chapters[currentChapter];
-      }
 
-      document.getElementById('chapterNum').textContent = `${currentChapter + 1} / ${chapters.length}`;
-      document.getElementById('prevBtn').style.visibility = currentChapter === 0 ? 'hidden' : 'visible';
-      document.getElementById('nextBtn').textContent = currentChapter === chapters.length - 1 ? 'إنتقلي للهدية 🎁' : 'التالي ✨';
-    }
-
-    function nextGalleryImage() {
-      currentImgIndex = (currentImgIndex + 1) % galleryImages.length;
-      document.getElementById('gImg').src = galleryImages[currentImgIndex].url;
-      document.getElementById('gCaption').textContent = galleryImages[currentImgIndex].caption;
-    }
-
-    function nextSong() {
-      currentSongIndex = (currentSongIndex + 1) % gallerySongs.length;
-      document.getElementById('songTitle').textContent = gallerySongs[currentSongIndex].title;
-      document.getElementById('songCaption').textContent = `"${gallerySongs[currentSongIndex].caption}"`;
-      document.getElementById('songLink').href = gallerySongs[currentSongIndex].url;
-    }
-
-    function changeChapter(dir) {
-      if (dir === 1 && currentChapter === chapters.length - 1) {
-        showStep(3);
-        return;
-      }
-      currentChapter += dir;
-      renderChapter();
-    }
-
-    function startLiveCounter() {
-      const startDate = new Date('2024-08-13T01:55:00');
-      setInterval(() => {
-        const now = new Date();
-        const diff = now - startDate;
-        document.getElementById('days').textContent = Math.floor(diff / (1000 * 60 * 60 * 24));
-        document.getElementById('hours').textContent = Math.floor((diff / (1000 * 60 * 60)) % 24);
-        document.getElementById('minutes').textContent = Math.floor((diff / 1000 / 60) % 60);
-        document.getElementById('seconds').textContent = Math.floor((diff / 1000) % 60);
-      }, 1000);
-    }
-
-    function createFloatingHearts() {
-      const bg = document.getElementById('spaceBg');
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.className = 'heart-particle';
-        heart.innerHTML = ['💕', '✨', '💖', '⭐'][Math.floor(Math.random() * 4)];
-        heart.style.left = Math.random() * 100 + 'vw';
-        heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-        heart.style.animationDelay = Math.random() * 5 + 's';
-        bg.appendChild(heart);
-      }
-    }
-
-    function openFinalGift() {
-      document.getElementById('giftBox').textContent = '🎉';
-      document.getElementById('giftHint').style.display = 'none';
-      document.getElementById('giftResult').style.display = 'block';
-      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
-      setTimeout(() => { document.getElementById('loveFill').style.width = '100%'; }, 100);
-    }
-
-    function restartExperience() {
-      currentChapter = 0;
-      showStep(1);
-    }
-  </script>
-</body>
-</html>
+        
